@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kletterprüfung</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="catalog.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar-inner">
+      <div class="toolbar-row">
+        <strong>Kletterprüfung</strong>
+        <a id="history-link" href="#protokolle">Protokolle</a>
+        <button id="new" type="button">Neue Prüfung</button>
+      </div>
+      <nav id="navigation" aria-label="Prüfungsabschnitte" hidden>
+        <div class="toolbar-row">
+          <label for="procedure">Vorgang</label>
+          <select id="procedure"></select>
+          <a href="#auswertung">Auswertung</a>
+        </div>
+        <div id="categories" class="category-strip" aria-label="Kategorien"></div>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <p id="storage-warning" role="status" hidden>Der Browser konnte die Daten nicht lokal speichern. Du kannst sie in dieser Sitzung als CSV exportieren.</p>
+    <section id="start" aria-labelledby="start-title">
+      <h1 id="start-title" tabindex="-1">Prüfungsart wählen</h1>
+      <div class="actions">
+        <button type="button" data-start="toprope">Toprope</button>
+        <button type="button" data-start="vorstieg">Vorstieg</button>
+        <button type="button" id="resume" hidden>Zur laufenden Prüfung</button>
+      </div>
+    </section>
+    <div id="exam" hidden>
+      <h1 id="exam-title" tabindex="-1"></h1>
+      <div class="exam-fields">
+        <label>Name des Prüflings<input id="participant" maxlength="200" autocomplete="off"></label>
+        <label>Name des Trainers<input id="trainer" maxlength="200" autocomplete="off"></label>
+        <p>Prüfungsdatum <time id="exam-date"></time></p>
+      </div>
+      <div id="checklist"></div>
+      <section id="auswertung" aria-labelledby="result-title">
+        <h2 id="result-title">Auswertung</h2>
+        <p id="progress-label"></p>
+        <progress id="progress" aria-label="Bewertete Kompetenzen"></progress>
+        <p id="result" aria-live="polite"></p>
+        <p>Bis 5 Minuspunkte: bestanden. 6–9: Grenzfall. Ab 10: nicht bestanden.</p>
+        <div id="observations"></div>
+      </section>
+    </div>
+    <section id="protokolle" aria-labelledby="history-title">
+      <details id="history">
+        <summary id="history-title">Gespeicherte Protokolle <span id="history-count"></span></summary>
+        <p>Die Protokolle bleiben im Browser. Namen von Prüflingen werden nach sieben Tagen entfernt. Der CSV-Export enthält keine Namen von Prüflingen.</p>
+        <button id="export" type="button">Alle als CSV exportieren</button>
+        <ul id="history-list"></ul>
+      </details>
+    </section>
+  </main>
+  <noscript>Für den Prüfungsbogen wird JavaScript benötigt.</noscript>
+</body>
+</html>
