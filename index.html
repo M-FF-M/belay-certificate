@@ -45,11 +45,27 @@
       </div>
       <div id="checklist"></div>
       <section id="auswertung" aria-labelledby="result-title">
-        <h2 id="result-title">Auswertung</h2>
-        <p id="progress-label"></p>
-        <progress id="progress" aria-label="Bewertete Kompetenzen"></progress>
-        <p id="result" aria-live="polite"></p>
-        <p>Bis 5 Minuspunkte: bestanden. 6–9: Grenzfall. Ab 10: nicht bestanden.</p>
+        <div class="result-heading">
+          <h2 id="result-title" tabindex="-1">Auswertung</h2>
+          <p id="result" aria-live="polite"></p>
+        </div>
+        <div class="review-row">
+          <div class="progress-block">
+            <label id="progress-label" for="progress"></label>
+            <progress id="progress"></progress>
+          </div>
+          <button id="review-missing" type="button" hidden>Fehlende Angaben prüfen</button>
+        </div>
+        <dl class="severity-totals" aria-label="Anzahl gewerteter Fehler je Stufe">
+          <div class="level-light"><dt>Leicht</dt><dd id="count-CF">0</dd></div>
+          <div class="level-major"><dt>Erheblich</dt><dd id="count-BF">0</dd></div>
+          <div class="level-critical"><dt>Kritisch</dt><dd id="count-AF">0</dd></div>
+        </dl>
+        <h3>Gewertete Fehlerbilder</h3>
+        <p id="no-findings">Bisher keine Fehler erfasst.</p>
+        <ul id="findings"></ul>
+        <p class="threshold-note">Bis 5 Minuspunkte bestanden · 6–9 Grenzfall · ab 10 nicht bestanden</p>
+        <h3>Allgemeine Beobachtungen</h3>
         <div id="observations"></div>
       </section>
     </div>

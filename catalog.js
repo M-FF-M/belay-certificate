@@ -1,7 +1,7 @@
 // Statischer Export aus Pruefpunkte-Google-Sheet.xlsx. Format siehe README.md.
 window.examCatalog = {
   "version": 1,
-  "escalateAt": 5,
+  "escalateAt": { "CF": 5, "BF": 2 },
   "thresholds": {
     "borderline": 6,
     "fail": 10

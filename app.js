@@ -8,8 +8,8 @@ const nameLifetime = 7 * 24 * 60 * 60 * 1000;
 const dateFormat = new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" });
 const $ = (id) => document.getElementById(id);
 const categoryColors = [
-  ["#366691", "#eaf3fb"], ["#37745d", "#e8f5ef"], ["#8b5a24", "#fff1df"],
-  ["#76609a", "#f1ebf8"], ["#a34869", "#fbeaf1"], ["#447274", "#e6f4f5"],
+  ["#53708c", "#edf2f8"], ["#557b6a", "#eef5f0"], ["#786d88", "#f2eff7"],
+  ["#857154", "#f6f3ed"], ["#526f77", "#eaf3f4"], ["#876d78", "#f6eff2"],
 ];
 const severityColors = {
   CF: ["#94700f", "#fff8db", "#ffeaa0"],
@@ -23,6 +23,7 @@ let view = [];
 let categoryLinks = new Map();
 let scrollScheduled = false;
 let retentionTimer;
+let reviewTarget = null;
 
 function element(tag, text, className) {
   const node = document.createElement(tag);
@@ -157,10 +158,18 @@ function stateFor(exam, item) {
   return exam.ratings[item.id] ?? { perfect: false, counts: {} };
 }
 
+function promoted(state, error) {
+  return Boolean(error.escalatesTo && state.counts[error.id] >= catalog.escalateAt[error.severity]);
+}
+
+function replacedByFrequent(state, error) {
+  return Boolean(error.escalatesTo && (state.counts[error.escalatesTo] || promoted(state, error)));
+}
+
 function effectiveCount(item, state, error) {
   const { counts } = state;
-  if (error.escalatesTo && (counts[error.escalatesTo] || counts[error.id] >= catalog.escalateAt)) return 0;
-  if (item.errors.some((source) => source.escalatesTo === error.id && counts[source.id] >= catalog.escalateAt)) return 1;
+  if (replacedByFrequent(state, error)) return 0;
+  if (item.errors.some((source) => source.escalatesTo === error.id && promoted(state, source))) return 1;
   return counts[error.id] ?? 0;
 }
 
@@ -171,14 +180,14 @@ function changeError(item, state, error, undo = false) {
       if (--counts[error.id] === 0) delete counts[error.id];
     } else {
       const source = item.errors.find((candidate) =>
-        candidate.escalatesTo === error.id && counts[candidate.id] >= catalog.escalateAt
+        candidate.escalatesTo === error.id && promoted(state, candidate)
       );
-      if (source) counts[source.id] = catalog.escalateAt - 1;
+      if (source) counts[source.id] = catalog.escalateAt[source.severity] - 1;
     }
     return;
   }
   if ((!error.repeat && effectiveCount(item, state, error)) ||
-      (error.escalatesTo && (counts[error.escalatesTo] || counts[error.id] >= catalog.escalateAt))) return;
+      replacedByFrequent(state, error)) return;
   if (error.exclusiveGroup) {
     for (const sibling of item.errors) {
       if (sibling.id !== error.id && sibling.exclusiveGroup === error.exclusiveGroup) delete counts[sibling.id];
@@ -192,6 +201,8 @@ function evaluate(exam) {
   let points = 0;
   let rated = 0;
   let total = 0;
+  const severityCounts = { CF: 0, BF: 0, AF: 0 };
+  const findings = [];
   for (const procedure of forMode(exam.mode)) {
     for (const category of procedure.categories) {
       for (const item of category.competencies) {
@@ -199,7 +210,12 @@ function evaluate(exam) {
         const state = stateFor(exam, item);
         if (state.perfect || Object.keys(state.counts).length) rated++;
         for (const error of item.errors) {
-          points += effectiveCount(item, state, error) * catalog.severities[error.severity].points;
+          const count = effectiveCount(item, state, error);
+          if (!count) continue;
+          const deduction = count * catalog.severities[error.severity].points;
+          severityCounts[error.severity] += count;
+          points += deduction;
+          findings.push({ procedure, category, item, error, count, deduction });
         }
       }
     }
@@ -207,7 +223,7 @@ function evaluate(exam) {
   let status = "open";
   if (points >= catalog.thresholds.fail) status = "failed";
   else if (rated === total) status = points >= catalog.thresholds.borderline ? "borderline" : "passed";
-  return { points, rated, total, status };
+  return { points, rated, total, status, severityCounts, findings };
 }
 
 const abbreviations = {
@@ -226,12 +242,13 @@ function setCategoryColor(node, category) {
   node.style.setProperty("--category-bg", background);
 }
 
-function renderCompetency(item) {
+function renderCompetency(item, categoryTitle) {
   const exam = current();
   const card = element("article", undefined, "competency");
   const heading = element("div", undefined, "competency-heading");
-  const name = element("h4", readable(item.label));
-  name.id = item.id;
+  const name = categoryTitle ?? element("h4", readable(item.label));
+  card.id = item.id;
+  name.id = `title-${item.id}`;
   card.setAttribute("aria-labelledby", name.id);
   const perfect = button("Alles perfekt", "perfect");
   heading.append(name, perfect);
@@ -271,10 +288,11 @@ function renderCompetency(item) {
   function refresh() {
     const state = stateFor(exam, item);
     perfect.disabled = Object.keys(state.counts).length > 0;
+    card.dataset.rated = String(perfect.disabled || state.perfect);
     perfect.setAttribute("aria-pressed", state.perfect);
     for (const { error, severity, tally, add, undo } of controls) {
       const count = effectiveCount(item, state, error);
-      const blocked = !!error.escalatesTo && (state.counts[error.escalatesTo] || state.counts[error.id] >= catalog.escalateAt);
+      const blocked = replacedByFrequent(state, error);
       const automatic = count && !state.counts[error.id];
       add.disabled = Boolean(blocked || (!error.repeat && count));
       add.setAttribute("aria-pressed", count > 0);
@@ -295,11 +313,15 @@ function renderCompetency(item) {
     renderHistory();
   }
 
-  perfect.addEventListener("click", () => commit((state) => { state.perfect = !state.perfect; }));
+  perfect.addEventListener("click", () => {
+    commit((state) => { state.perfect = !state.perfect; });
+    if (reviewTarget) reviewNext();
+  });
   const details = element("details");
   details.append(element("summary", "Details"), element("p", `Idealbild: ${readable(item.ideal)}`));
-  if (item.errors.some((error) => error.escalatesTo)) {
-    details.append(element("p", `Beim ${catalog.escalateAt}. Vorkommnis ersetzt der passende häufige Fehler die Einzelvorkommnisse.`));
+  for (const level of new Set(item.errors.filter((error) => error.escalatesTo).map((error) => error.severity))) {
+    const label = catalog.severities[level].label;
+    details.append(element("p", `${label}: Bei einem verknüpften Fehlerbild zählt ab dem ${catalog.escalateAt[level]}. Vorkommnis der häufige Fehler.`));
   }
   for (const error of item.errors.filter((entry) => entry.ideal)) {
     details.append(element("p", `${readable(error.description)} · Idealbild: ${readable(error.ideal)}`));
@@ -319,12 +341,47 @@ function renderCompetency(item) {
 }
 
 function updateResult() {
-  const { points, rated, total, status } = evaluate(current());
+  const { points, rated, total, status, severityCounts, findings } = evaluate(current());
   $("progress").max = total;
   $("progress").value = rated;
   $("progress-label").textContent = `${rated} von ${total} Kompetenzen bewertet`;
   $("result").dataset.status = status;
   $("result").textContent = `${points} Minuspunkte · ${status === "open" ? "Bewertung läuft" : statuses[status]}`;
+  $("review-missing").hidden = rated === total;
+  for (const [code, count] of Object.entries(severityCounts)) $("count-" + code).textContent = count;
+  const rows = findings.map(({ procedure, category, item, error, count, deduction }) => {
+    const row = element("li");
+    const description = element("div");
+    const location = [...new Set([procedure.label, category.label, readable(item.label)])].join(" · ");
+    description.append(element("small", location), element("span", readable(error.description)));
+    const weight = element("div", undefined, "finding-weight");
+    weight.append(element("strong", `−${deduction}`), element("small", `${count} × ${catalog.severities[error.severity].label}`));
+    row.append(description, weight);
+    return row;
+  });
+  $("findings").replaceChildren(...rows);
+  $("no-findings").hidden = rows.length > 0;
+}
+
+function stopReview() {
+  if (reviewTarget) reviewTarget.classList.remove("review-target");
+  reviewTarget = null;
+}
+
+function reviewNext() {
+  stopReview();
+  reviewTarget = $("checklist").querySelector('.competency[data-rated="false"]');
+  if (reviewTarget) {
+    const categoryId = reviewTarget.closest(".category").id;
+    const procedure = view.find((section) => section.categories.some((category) => category.id === categoryId));
+    categoryNav(procedure, categoryId);
+    reviewTarget.classList.add("review-target");
+    reviewTarget.querySelector(".perfect").focus({ preventScroll: true });
+    reviewTarget.scrollIntoView({ block: "start" });
+  } else {
+    $("result-title").focus({ preventScroll: true });
+    $("auswertung").scrollIntoView({ block: "start" });
+  }
 }
 
 function renderObservations(exam) {
@@ -356,6 +413,8 @@ function categoryNav(procedure, categoryId) {
     }
     $("categories").replaceChildren(...categoryLinks.values());
     $("categories").dataset.procedure = procedure.id;
+    // A newly overflowing tab strip may change height before ResizeObserver runs.
+    updateToolbarHeight();
   }
   $("procedure").value = procedure.id;
   for (const [id, link] of categoryLinks) {
@@ -399,7 +458,16 @@ function renderChecklist() {
       const group = element("section", undefined, "category");
       group.id = category.id;
       setCategoryColor(group, category);
-      group.append(element("h3", category.label), ...category.competencies.map(renderCompetency));
+      const title = element("h3", category.label);
+      if (category.competencies.length === 1) {
+        const item = category.competencies[0];
+        const label = readable(item.label);
+        if (label.startsWith(category.label)) title.textContent = label;
+        else if (label !== category.label) title.textContent += ` · ${label}`;
+        group.append(renderCompetency(item, title));
+      } else {
+        group.append(title, ...category.competencies.map((item) => renderCompetency(item)));
+      }
       section.append(group);
     }
     return section;
@@ -411,6 +479,7 @@ function renderChecklist() {
 }
 
 function showStart() {
+  stopReview();
   $("start").hidden = false;
   $("resume").hidden = !current();
   $("exam").hidden = true;
@@ -418,6 +487,7 @@ function showStart() {
 }
 
 function openExam(id, focus = false) {
+  stopReview();
   activeId = id;
   const exam = current();
   if (!exam) return showStart();
@@ -522,6 +592,13 @@ function downloadCsv() {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function cancelReviewOutsidePerfect(event) {
+  if (reviewTarget && !event.target.closest(".perfect")) stopReview();
+}
+
+// Capture before a control updates the checklist, including keyboard-initiated clicks.
+document.addEventListener("click", cancelReviewOutsidePerfect, true);
+$("review-missing").addEventListener("click", reviewNext);
 document.querySelectorAll("[data-start]").forEach((control) => {
   control.addEventListener("click", () => makeExam(control.dataset.start));
 });
@@ -569,9 +646,11 @@ window.addEventListener("pageshow", expireNames);
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) expireNames();
 });
-new ResizeObserver(([entry]) => {
-  document.documentElement.style.setProperty("--bar-height", `${entry.target.offsetHeight}px`);
-}).observe(document.querySelector(".toolbar"));
+function updateToolbarHeight() {
+  const height = document.querySelector(".toolbar").offsetHeight;
+  document.documentElement.style.setProperty("--bar-height", `${height}px`);
+}
+new ResizeObserver(updateToolbarHeight).observe(document.querySelector(".toolbar"));
 
 expireNames();
 if (current()) openExam(activeId);
