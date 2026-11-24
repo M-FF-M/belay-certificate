@@ -1,0 +1,63 @@
+.editor { max-width: 60rem; }
+.editor-panel { margin: .8rem 0; padding: clamp(.75rem, 2vw, 1.2rem); border: 1px solid var(--line); background: white; border-radius: .65rem; }
+.editor-panel h2, .editor-panel h3 { margin: .3rem 0 .65rem; }
+.file-actions, .panel-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.panel-heading { justify-content: space-between; }
+#download, #apply-source { color: white; background: #383c45; }
+#save-status { margin: .6rem 0 0; font-size: .875rem; color: #505966; overflow-wrap: anywhere; }
+#save-status[data-saved="false"], #message { color: #852d30; }
+#message { margin: .6rem 0 0; }
+.editor label { display: grid; gap: .2rem; margin-bottom: .6rem; font-size: .9rem; font-weight: 600; }
+.editor textarea, .editor select, .editor input[type=text] {
+  width: 100%; min-width: 0; border: 1px solid #abaeb7; border-radius: .4rem; padding: .45rem; font: inherit; font-weight: normal; color: inherit; background: white;
+}
+.editor textarea { resize: vertical; font-size: 1rem; }
+.field-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); gap: .55rem; }
+.navigation-fields { margin: .8rem 0; padding: .65rem; border-radius: .45rem; background: #f1f3f5; }
+.editor fieldset { min-width: 0; margin: 0 0 .65rem; padding: .6rem .8rem; border: 1px solid var(--line); border-radius: .45rem; }
+.editor legend { max-width: 100%; padding: 0 .3rem; font-size: .875rem; overflow-wrap: anywhere; }
+.editor label.check { display: flex; align-items: center; gap: .4rem; align-self: center; }
+.mode-options, .item-actions { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+.item-actions { margin-top: .8rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+.editor .check input { min-height: initial; }
+.editor details summary { padding: .4rem 0; }
+.editor .remove { font-size: .875rem; }
+#source-text { display: block; margin: .4rem 0 .75rem; tab-size: 2; }
+
+.editor-toolbar { justify-content: space-between; flex-wrap: wrap; padding-block: .25rem; }
+.editor-toolbar strong { margin: 0; }
+.view-switch { display: flex; gap: .2rem; }
+.view-switch button { min-height: 2.2rem; font-size: .875rem; }
+.view-switch [aria-pressed="true"] { background: #383c45; border-color: #383c45; color: white; }
+.editor:has(#sheet-panel:not([hidden])) { max-width: 85rem; }
+#sheet-help, #sheet-empty { margin: .4rem 0 .65rem; font-size: .9rem; }
+.sheet-scroll { overflow: auto; max-height: max(15rem, 70vh); border: 1px solid var(--line); }
+.catalog-sheet {
+  table-layout: fixed; width: 100%; min-width: 60rem; border-spacing: 0;
+  font-size: .875rem; text-align: left;
+}
+.catalog-sheet col:nth-child(1) { width: 8rem; }
+.catalog-sheet col:nth-child(2) { width: 13%; }
+.catalog-sheet col:nth-child(3) { width: 13%; }
+.catalog-sheet col:nth-child(4) { width: 16%; }
+.catalog-sheet th, .catalog-sheet td {
+  padding: .25rem .5rem; border-inline-end: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.catalog-sheet th { position: sticky; top: 0; z-index: 1; padding-block: .5rem; background: #edf0f3; }
+.catalog-sheet td { background: var(--category-bg); vertical-align: top; }
+.catalog-sheet td:first-child { background: var(--error-bg); border-inline-start: .25rem solid var(--error); }
+.catalog-sheet td:nth-child(3) { border-inline-start: .2rem solid var(--category); }
+.catalog-sheet tbody tr { cursor: pointer; }
+.catalog-sheet tbody tr:is(:hover, :focus-within) td { box-shadow: inset 0 -2px var(--category); }
+.sheet-cell { display: flex; align-items: start; min-width: 0; line-height: 1.55rem; }
+.sheet-text { min-width: 0; overflow: hidden; white-space: nowrap; }
+.sheet-cell.is-expanded .sheet-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.catalog-sheet button { min-height: 1.55rem; font: inherit; line-height: inherit; }
+.sheet-open { border: 0; padding: 0; background: transparent; text-align: start; font-weight: 600; }
+.sheet-more { flex: none; padding: 0 .3rem; min-width: 1.55rem; background: #ffffffbd; border-color: #727985; }
+#error-fields fieldset { scroll-margin-block-start: 5rem; }
+#error-fields fieldset:focus { outline: 3px solid #424958; outline-offset: 2px; }
+@media (max-width: 28rem) {
+  .editor-toolbar { gap: .2rem .5rem; }
+  .editor-toolbar .view-switch { order: 1; flex-basis: 100%; }
+}

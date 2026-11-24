@@ -1,7 +1,8 @@
-// Statischer Export aus Pruefpunkte-Google-Sheet.xlsx. Format siehe README.md.
+// Prüfungsgrundlage aus Pruefpunkte-Google-Sheet.xlsx mit redaktionellen und fachlichen Anpassungen.
 window.examCatalog = {
   "version": 1,
   "escalateAt": { "CF": 5, "BF": 2 },
+  "repeatLimits": { "CF": 5, "BF": 3, "AF": 2 },
   "thresholds": {
     "borderline": 6,
     "fail": 10
@@ -32,14 +33,14 @@ window.examCatalog = {
       "label": "Kritisch",
       "points": 10,
       "short": "Mangelhafte Einzelkompetenz / Unmittelbare oder akut drohende erhebliche Gefährdung. Die Sicherheit ist nicht mehr zuverlässig gewährleistet.",
-      "description": "Unmittelbare oder akut drohende erhebliche Gefährdung.\nEine Handlung oder Unterlassung, die bereits für sich genommen einen Absturz, eine schwere Verletzung oder eine unkontrollierbare Gefahr verursacht bzw. bei der nächsten relevanten Belastung mit hoher Wahrscheinlichkeit dazu führt. Die Sicherheit ist nicht mehr zuverlässig gewährleistet oder erfordert ein Eingreifen. Besteimmte Einzelkompetenzen sind stark mangelhaft (Bedienung Sicherungsgerät, Knotenknüpfen nicht möglich...)",
+      "description": "Unmittelbare oder akut drohende erhebliche Gefährdung.\nEine Handlung oder Unterlassung, die bereits für sich genommen einen Absturz, eine schwere Verletzung oder eine unkontrollierbare Gefahr verursacht oder bei der nächsten relevanten Belastung mit hoher Wahrscheinlichkeit dazu führt. Die Sicherheit ist nicht mehr zuverlässig gewährleistet oder erfordert ein Eingreifen. Bestimmte Einzelkompetenzen sind stark mangelhaft (zum Beispiel bei der Bedienung des Sicherungsgeräts oder beim Knüpfen eines Knotens).",
       "examples": "Falsch geknüpfter oder nicht vollständig fertiggestellter Einbindeknoten.\nEinbinden in die Materialschlaufe statt in den vorgesehenen Anseilpunkt.\nGefährlich viel Schlappseil in Bodennähe, sodass bei einem Sturz ein Bodensturz droht.\nBremsseil loslassen bei einem dynamischen Sicherungsgerät in einer Situation, in der ein Sturz gehalten werden muss.\nNicht erkannte Fehlbedienung des Sicherungsgeräts mit unmittelbar drohendem Kontrollverlust.\nKollision mit einem anderen Kletterer aufgrund einer nicht mehr kontrollierbaren Situation."
     }
   },
   "observations": [
     {
       "id": "b1",
-      "source": "S tendenziell abwesend - sehr präsent",
+      "source": "Präsenz der sichernden Person: von eher abwesend bis sehr präsent",
       "label": "Aufmerksamkeit der sichernden Person",
       "options": [
         "Eher abwesend",
@@ -49,7 +50,7 @@ window.examCatalog = {
     },
     {
       "id": "b2",
-      "source": "S tendenziell Fehler wahrnehmend und korrigierend",
+      "source": "Die sichernde Person nimmt Fehler wahr und korrigiert sie",
       "label": "Fehler erkennen und korrigieren",
       "options": [
         "Selten",
@@ -81,10 +82,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Sind beide in der Lage (Nüchtern, fit, gesund...) zum Sichern & Klettern?",
+              "ideal": "Sind beide nüchtern, fit und gesund genug zum Sichern und Klettern?",
               "media": [],
               "errors": [
-                {"id":"v1-1-f1","severity":"CF","description":"Sicherungsfähigkeit checken vergessen","repeat":false}
+                {"id":"v1-1-f1","severity":"CF","description":"Sicherungsfähigkeit nicht geprüft","repeat":false}
               ]
             },
             {
@@ -95,10 +96,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Kommandos & Namen geklärt",
+              "ideal": "Kommandos und Namen geklärt",
               "media": [],
               "errors": [
-                {"id":"v1-2-f1","severity":"CF","description":"Kommandos & Namen NICHT geklärt","repeat":false}
+                {"id":"v1-2-f1","severity":"CF","description":"Kommandos und Namen nicht geklärt","repeat":false}
               ]
             }
           ]
@@ -106,36 +107,36 @@ window.examCatalog = {
         {
           "id": "v1-k2",
           "label": "Gewichtsunterschied",
-          "source": "GU Check",
+          "source": "Prüfung des Gewichtsunterschieds",
           "color": 1,
           "competencies": [
             {
               "id": "v1-3",
               "number": 3,
-              "label": "GU im TR",
+              "label": "Gewichtsunterschied im Toprope",
               "modes": [
                 "toprope"
               ],
-              "ideal": "TR Nutzung BA ab > 30%",
+              "ideal": "Bei einem Gewichtsunterschied über 30 % im Toprope einen Bremsassistenten verwenden",
               "media": [],
               "errors": [
-                {"id":"v1-3-f1","severity":"AF","description":"GU im TR über 50%, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v1-3-f2","severity":"BF","description":"GU im TR über 30 - 50%, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"}
+                {"id":"v1-3-f1","severity":"AF","description":"Gewichtsunterschied im Toprope über 50 %, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v1-3-f2","severity":"BF","description":"Gewichtsunterschied im Toprope über 30 % bis 50 %, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"}
               ]
             },
             {
               "id": "v1-4",
               "number": 4,
-              "label": "GU im VS",
+              "label": "Gewichtsunterschied im Vorstieg",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "VS Nutzung BA ab > 5kg im VS & auf -5 bis +5 kg kompensiert",
+              "ideal": "Bei einem Gewichtsunterschied über 5 kg im Vorstieg einen Bremsassistenten verwenden und den Unterschied auf −5 bis +5 kg ausgleichen",
               "media": [],
               "errors": [
-                {"id":"v1-4-f1","severity":"AF","description":"GU im VS über 20 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v1-4-f2","severity":"BF","description":"GU im VS zwischen 10 - 20 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v1-4-f3","severity":"CF","description":"GU im VS zwischen 5 - 10 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"}
+                {"id":"v1-4-f1","severity":"AF","description":"Gewichtsunterschied im Vorstieg über 20 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v1-4-f2","severity":"BF","description":"Gewichtsunterschied im Vorstieg zwischen 10 und 20 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v1-4-f3","severity":"CF","description":"Gewichtsunterschied im Vorstieg zwischen 5 und 10 kg, keine Maßnahme","repeat":false,"exclusiveGroup":"g1"}
               ]
             }
           ]
@@ -154,10 +155,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "S sichert in festen / vorne geschlossenen Schuhen",
+              "ideal": "Die sichernde Person sichert in festen, vorne geschlossenen Schuhen",
               "media": [],
               "errors": [
-                {"id":"v1-5-f1","severity":"CF","description":"S sichert Barfuß, in Flipflops oder Kletterschuhen","repeat":false}
+                {"id":"v1-5-f1","severity":"CF","description":"Die sichernde Person sichert barfuß, in Flipflops oder in Kletterschuhen","repeat":false}
               ]
             },
             {
@@ -168,10 +169,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Klettermaterial gecheckt: Gurt, Seil & Schlingen nicht älter als 10 Jahre",
+              "ideal": "Klettermaterial geprüft: Gurt, Seil und Schlingen sind höchstens 10 Jahre alt",
               "media": [],
               "errors": [
-                {"id":"v1-6-f1","severity":"CF","description":"Klettermaterial NICHT gecheckt: Gurt, Seil & Schlingen nicht älter als 10 Jahre","repeat":false}
+                {"id":"v1-6-f1","severity":"CF","description":"Nicht geprüft, ob Gurt, Seil und Schlingen höchstens 10 Jahre alt sind","repeat":false}
               ]
             },
             {
@@ -182,10 +183,24 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Seillänge gecheckt / lang genug",
+              "ideal": "Seillänge geprüft, Seil lang genug",
               "media": [],
               "errors": [
-                {"id":"v1-7-f1","severity":"CF","description":"Seillänge NICHT gecheckt / zu kurz","repeat":false}
+                {"id":"v1-7-f1","severity":"CF","description":"Seillänge nicht geprüft oder Seil zu kurz","repeat":false}
+              ]
+            },
+            {
+              "id": "v1-8",
+              "number": 8,
+              "label": "Sturzraum",
+              "modes": [
+                "toprope",
+                "vorstieg"
+              ],
+              "ideal": "Sturzraum unter der Sicherungslinie frei von Gegenständen",
+              "media": [],
+              "errors": [
+                {"id":"v1-8-f1","severity":"CF","description":"Gegenstände im Sturzraum unter der Sicherungslinie","repeat":false}
               ]
             },
             {
@@ -195,12 +210,12 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Nachstieg ab leicht überhägendem Gelände / bei seitlich versetztem Umlenker",
+              "ideal": "Nachstieg ab leicht überhängendem Gelände oder bei seitlich versetztem Umlenker",
               "media": [],
               "errors": [
-                {"id":"v1-9-f1","severity":"AF","description":"Toprope in stark überhängendem Gelände (Pendel > 4 m)","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v1-9-f2","severity":"BF","description":"Toprope in ordentlich überhängendem Gelände (Pendel 2 - 4 m)","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v1-9-f3","severity":"CF","description":"Toprope in leicht überhängendem Gelände / bei seitlich versetztem Umlenker (Pendel 1 - 2 m)","repeat":false,"exclusiveGroup":"g1"}
+                {"id":"v1-9-f1","severity":"AF","description":"Toprope in stark überhängendem Gelände (Pendelstrecke über 4 m)","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v1-9-f2","severity":"BF","description":"Toprope in deutlich überhängendem Gelände (Pendelstrecke 2–4 m)","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v1-9-f3","severity":"CF","description":"Toprope in leicht überhängendem Gelände oder bei seitlich versetztem Umlenker (Pendelstrecke 1–2 m)","repeat":false,"exclusiveGroup":"g1"}
               ]
             },
             {
@@ -210,10 +225,10 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Toprope an redundanter Umleknung / mindestens 2 übereinanderliegenden Exen",
+              "ideal": "Toprope an redundanter Umlenkung / mindestens zwei übereinanderliegenden Expressschlingen",
               "media": [],
               "errors": [
-                {"id":"v1-10-f1","severity":"AF","description":"Toprope an EINMALIGem Karabiner ohne Redundanz","repeat":false}
+                {"id":"v1-10-f1","severity":"AF","description":"Toprope an einem einzelnen Karabiner ohne Redundanz","repeat":false}
               ]
             },
             {
@@ -224,32 +239,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Die benachbarten Routen sind frei, eine Kollision mit anderen Personen ist ausgeschlossen",
+              "ideal": "Benachbarte Routen sind frei, eine Kollision mit anderen Personen ist ausgeschlossen",
               "media": [],
               "errors": [
-                {"id":"v1-11-f1","severity":"BF","description":"Die Route befindet sich im Kollisionsraum einer anderen Person, es wird trotzdem eingestiegen","repeat":false}
-              ]
-            }
-          ]
-        },
-        {
-          "id": "v1-k4",
-          "label": "Teamcheck",
-          "source": "Teamcheck",
-          "color": 3,
-          "competencies": [
-            {
-              "id": "v1-8",
-              "number": 8,
-              "label": "Sturzraum",
-              "modes": [
-                "toprope",
-                "vorstieg"
-              ],
-              "ideal": "Sturzraum unter der Sicherungslinie FREI von Gegenständen",
-              "media": [],
-              "errors": [
-                {"id":"v1-8-f1","severity":"CF","description":"Sturzraum unter der Sicherungslinie NICHT frei von Gegenständen","repeat":false}
+                {"id":"v1-11-f1","severity":"BF","description":"In die Route eingestiegen, obwohl eine Kollision mit einer anderen Person möglich ist","repeat":false}
               ]
             }
           ]
@@ -278,13 +271,13 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Gurt sitzt optimal & unverdreht, alle Verschlüsse zu, KEIN Material am Gurt, Hosentaschen leer",
+              "ideal": "Gurt sitzt passend und unverdreht, alle Verschlüsse sind geschlossen, der Gurt ist frei von Material und die Hosentaschen sind leer",
               "media": [],
               "errors": [
-                {"id":"v2-1-f1","severity":"AF","description":"Gurtverschlüsse offen, Gurt verkehrt rum angelegt, Gurt anziehen überfordert stark, Größe unpassend","repeat":false},
-                {"id":"v2-1-f2","severity":"BF","description":"Gurt hängt Baggystyle unterhalb der Hüftknochen","repeat":false},
-                {"id":"v2-1-f3","severity":"CF","description":"Gurt frei von Material / Karabiner / Hosentaschen leer","repeat":false},
-                {"id":"v2-1-f4","severity":"CF","description":"Gurt sitzt etwas locker / Anseilring oder Beinschlaufen verdeht","repeat":false}
+                {"id":"v2-1-f1","severity":"AF","description":"Gurtverschlüsse offen, Gurt verkehrt herum angelegt, starke Überforderung beim Anziehen oder unpassende Größe","repeat":false},
+                {"id":"v2-1-f2","severity":"BF","description":"Gurt hängt unterhalb der Hüftknochen","repeat":false},
+                {"id":"v2-1-f3","severity":"CF","description":"Material oder Karabiner am Gurt oder Gegenstände in den Hosentaschen","repeat":false},
+                {"id":"v2-1-f4","severity":"CF","description":"Gurt sitzt etwas locker, Anseilring oder Beinschlaufen sind verdreht","repeat":false}
               ]
             }
           ]
@@ -303,15 +296,15 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Anseilknoten sauber, Knotenauge möglichst klein, 1-2 Hände Überstand, redundant durch beide Anseilschlaufen",
+              "ideal": "Anseilknoten sauber geknüpft, Knotenauge möglichst klein, Überstand ein bis zwei Handbreiten, redundant durch beide Anseilschlaufen eingebunden",
               "media": [],
               "errors": [
-                {"id":"v2-2-f1","severity":"AF","description":"Anseilknoten an falscher Stelle: Materialschlaufe, nur 1 Anseilschlaufe","repeat":false},
+                {"id":"v2-2-f1","severity":"AF","description":"Anseilknoten an der Materialschlaufe oder nur an einer Anseilschlaufe","repeat":false},
                 {"id":"v2-2-f2","severity":"AF","description":"Falscher (geknüpfter) Knoten als Anseilknoten","repeat":false},
-                {"id":"v2-2-f3","severity":"AF","description":"Große Unsicherheit beim Knüpfen des Anseilknotens AK","repeat":false},
-                {"id":"v2-2-f4","severity":"BF","description":"Knoten korrekt, Bild eindeutig zu unsauber, großes Knotenauge & viel zu langer Überstand","repeat":false},
-                {"id":"v2-2-f5","severity":"CF","description":"Knoten nicht ganz optimal, z.B unsauberes Knotenbild, etwas zu großes Knotenauge...","repeat":false},
-                {"id":"v2-2-f6","severity":"CF","description":"Knoten durch den den Sicherungsring geknüpft","repeat":false}
+                {"id":"v2-2-f3","severity":"AF","description":"Große Unsicherheit beim Knüpfen des Anseilknotens","repeat":false},
+                {"id":"v2-2-f4","severity":"BF","description":"Knoten korrekt, aber deutlich unsauberes Knotenbild, großes Knotenauge und viel zu langer Überstand","repeat":false},
+                {"id":"v2-2-f5","severity":"CF","description":"Knoten nicht ganz optimal, zum Beispiel unsauberes Knotenbild oder etwas zu großes Knotenauge","repeat":false},
+                {"id":"v2-2-f6","severity":"CF","description":"Knoten durch den Sicherungsring geknüpft","repeat":false}
               ]
             }
           ]
@@ -319,7 +312,7 @@ window.examCatalog = {
         {
           "id": "v2-k3",
           "label": "Sicherungsgerät",
-          "source": "SiGe",
+          "source": "Sicherungsgerät",
           "color": 2,
           "competencies": [
             {
@@ -330,15 +323,15 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Sichernde Person S nutzt vertrautes SiGe im Sicherungsring mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil",
+              "ideal": "Sichernde Person nutzt ein vertrautes Sicherungsgerät im Sicherungsring mit passendem Karabiner und Verschlusssystem. Das Seil passt und ist korrekt eingelegt.",
               "media": [],
               "errors": [
-                {"id":"v2-3-f1","severity":"BF","description":"Seil im Sicherungsgerät falsch eingelegt","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"},
-                {"id":"v2-3-f2","severity":"BF","description":"Kein Verschlusskarabiner beim Sicherungsgerät","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"},
-                {"id":"v2-3-f3","severity":"BF","description":"Sichernde Person nicht vertraut mit SiGe","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"},
-                {"id":"v2-3-f4","severity":"CF","description":"Ungeeigneter Verschlusskarabiner / Seilkombinationz.B bei Autotubes","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"},
-                {"id":"v2-3-f5","severity":"CF","description":"Karabinerverschluss auf der Bremshand BH Seite","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"},
-                {"id":"v2-3-f6","severity":"CF","description":"Karabiner NICHT im Sicherungsring","repeat":false,"ideal":"Sichernde Person S nutzt vertrautes SiGe mit passendem Karabiner & Verschlusssystem mit korrekt eingelegtem, passendem Seil"}
+                {"id":"v2-3-f1","severity":"BF","description":"Seil im Sicherungsgerät falsch eingelegt","repeat":false},
+                {"id":"v2-3-f2","severity":"BF","description":"Kein Verschlusskarabiner beim Sicherungsgerät","repeat":false},
+                {"id":"v2-3-f3","severity":"BF","description":"Sichernde Person mit dem Sicherungsgerät nicht vertraut","repeat":false},
+                {"id":"v2-3-f4","severity":"CF","description":"Ungeeigneter Verschlusskarabiner oder ungeeignete Seilkombination, zum Beispiel bei Autotubes","repeat":false},
+                {"id":"v2-3-f5","severity":"CF","description":"Karabinerverschluss auf der Bremshandseite","repeat":false},
+                {"id":"v2-3-f6","severity":"CF","description":"Karabiner nicht im Sicherungsring","repeat":false}
               ]
             }
           ]
@@ -360,8 +353,8 @@ window.examCatalog = {
               "ideal": "Doppelt gelegter Seilendknoten, freiliegend oder in den Seilsack gesteckt geknotet",
               "media": [],
               "errors": [
-                {"id":"v2-4-f1","severity":"BF","description":"Kein Seilendknoten","repeat":false},
-                {"id":"v2-4-f2","severity":"CF","description":"Falscher Seilendknoten, z.B einfacher Haushaltsknoten in den Seilsack","repeat":false}
+                {"id":"v2-4-f1","severity":"BF","description":"Kein Seilendknoten","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v2-4-f2","severity":"CF","description":"Falscher Seilendknoten, zum Beispiel ein einfacher Haushaltsknoten im Seilsack","repeat":false,"exclusiveGroup":"g1"}
               ]
             }
           ]
@@ -369,7 +362,7 @@ window.examCatalog = {
         {
           "id": "v2-k5",
           "label": "Bremsassistent",
-          "source": "BA",
+          "source": "Bremsassistent",
           "color": 4,
           "competencies": [
             {
@@ -380,12 +373,12 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Korrektes BA / Level gewählt, Seil richtig rum eingehängt und Verriegelung verschlossen",
+              "ideal": "Passenden Bremsassistenten und passende Stufe gewählt, Seil richtig herum eingehängt und Verriegelung geschlossen",
               "media": [],
               "errors": [
-                {"id":"v2-5-f1","severity":"BF","description":"BA / Stufe passt nicht zum GU","repeat":false},
-                {"id":"v2-5-f2","severity":"BF","description":"Seil verkehrt rum in BA eingelegt","repeat":false},
-                {"id":"v2-5-f3","severity":"BF","description":"Verriegelung BA offen","repeat":false}
+                {"id":"v2-5-f1","severity":"BF","description":"Bremsassistent oder Stufe passt nicht zum Gewichtsunterschied","repeat":false},
+                {"id":"v2-5-f2","severity":"BF","description":"Seil verkehrt herum in den Bremsassistenten eingelegt","repeat":false},
+                {"id":"v2-5-f3","severity":"BF","description":"Verriegelung am Bremsassistenten offen","repeat":false}
               ]
             }
           ]
@@ -414,11 +407,11 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Check haptisch erfolgt / Fehler erkannt: Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)",
+              "ideal": "Haptischen Check durchgeführt und Fehler erkannt: Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten und gegebenenfalls Bremsassistent",
               "media": [],
               "errors": [
-                {"id":"v3-1-f1","severity":"BF","description":"Selbstcheck komplett vergessen : Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)","repeat":false},
-                {"id":"v3-1-f2","severity":"CF","description":"EINMALIGe Elemente vergessen zu checken / übersehen: Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)","repeat":true}
+                {"id":"v3-1-f1","severity":"BF","description":"Selbstcheck komplett vergessen: Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten und gegebenenfalls Bremsassistent","repeat":false},
+                {"id":"v3-1-f2","severity":"CF","description":"Einzelne Elemente beim Selbstcheck vergessen oder übersehen: Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten oder Bremsassistent","repeat":true}
               ]
             }
           ]
@@ -437,12 +430,12 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Stets letzter Check vor dem Losklettern! Check haptisch (Gegenüber zum Zeigen auffordern) erfolgt / Fehler erkannt: Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)",
+              "ideal": "Letzter Check vor dem Losklettern: haptisch prüfen, das Gegenüber zum Zeigen auffordern und Fehler an Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten oder Bremsassistenten erkennen",
               "media": [],
               "errors": [
-                {"id":"v3-2-f1","severity":"BF","description":"Partnercheck komplett vergessen: Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)","repeat":false},
-                {"id":"v3-2-f2","severity":"CF","description":"Partnercheck zu früh!","repeat":false},
-                {"id":"v3-2-f3","severity":"CF","description":"EINMALIGe Elemente vergessen zu checken / übersehen: Anseilknoten / SiGe, Gurt, Seilendknoten, (BA)","repeat":true}
+                {"id":"v3-2-f1","severity":"BF","description":"Partnercheck komplett vergessen: Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten und gegebenenfalls Bremsassistent","repeat":false},
+                {"id":"v3-2-f2","severity":"CF","description":"Partnercheck zu früh durchgeführt","repeat":false},
+                {"id":"v3-2-f3","severity":"CF","description":"Einzelne Elemente beim Partnercheck vergessen oder übersehen: Anseilknoten, Sicherungsgerät, Gurt, Seilendknoten oder Bremsassistent","repeat":true}
               ]
             }
           ]
@@ -469,10 +462,10 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "S steht bereit mit einem Bein nach vorne und leicht angewinkelt",
+              "ideal": "Die sichernde Person steht bereit, ein Bein vorne und leicht angewinkelt",
               "media": [],
               "errors": [
-                {"id":"v4-1-f1","severity":"CF","description":"S steht passiv, mit durchgestreckten Beinen","repeat":false}
+                {"id":"v4-1-f1","severity":"CF","description":"Die sichernde Person steht passiv mit durchgestreckten Beinen","repeat":false}
               ]
             },
             {
@@ -482,13 +475,13 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "S steht beim TR sichern die ganze Zeit 1 - 2 m versetzt zur Sicherungslinie",
+              "ideal": "Die sichernde Person steht beim Sichern im Toprope durchgehend 1–2 m seitlich versetzt zur Sicherungslinie",
               "media": [],
               "errors": [
-                {"id":"v4-2-f1","severity":"BF","description":"S steht EINMALIG in BN bis 1/4 der Route unter der Kletterdnen Person K","repeat":true},
-                {"id":"v4-2-f2","severity":"BF","description":"S steht beim TR sichern HÄUFIG > 4 m versetzt zur Sicherungslinie","repeat":false,"exclusiveGroup":"g1"},
-                {"id":"v4-2-f3","severity":"CF","description":"S steht in BF ab 1/4 der Route unter der Kletterdnen Person K. Seil im Weg für K","repeat":false},
-                {"id":"v4-2-f4","severity":"CF","description":"S steht beim TR sichern HÄUFIG 2 - 4 m versetzt zur Sicherungslinie","repeat":false,"exclusiveGroup":"g1"}
+                {"id":"v4-2-f1","severity":"BF","description":"Die sichernde Person steht einmalig in Bodennähe bis zu einem Viertel der Route unter der kletternden Person","repeat":true},
+                {"id":"v4-2-f2","severity":"BF","description":"Die sichernde Person steht beim Sichern im Toprope häufig mehr als 4 m seitlich versetzt zur Sicherungslinie","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v4-2-f3","severity":"CF","description":"Die sichernde Person steht in Bodenferne ab einem Viertel der Route unter der kletternden Person. Das Seil ist ihr im Weg.","repeat":false},
+                {"id":"v4-2-f4","severity":"CF","description":"Die sichernde Person steht beim Sichern im Toprope häufig 2–4 m seitlich versetzt zur Sicherungslinie","repeat":false,"exclusiveGroup":"g1"}
               ]
             }
           ]
@@ -506,10 +499,10 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Seil BH Seitig neben S, mit Seilsack",
+              "ideal": "Seil mit Seilsack auf der Bremshandseite neben der sichernden Person",
               "media": [],
               "errors": [
-                {"id":"v4-3-f1","severity":"CF","description":"Seil ist ungünstig Positioniert z.B hinter S oder unter K in der Linie","repeat":false}
+                {"id":"v4-3-f1","severity":"CF","description":"Seil ungünstig positioniert, zum Beispiel hinter der sichernden Person oder unter der kletternden Person in der Sicherungslinie","repeat":false}
               ]
             },
             {
@@ -519,13 +512,13 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "In Bodennähe BN bis 1/4 der Route mit starker Seilspannung sichern, in Bodenferne BF ab 1/4 der Route kein Schlappseil & keine Seilspannung",
+              "ideal": "In Bodennähe bis zu einem Viertel der Route mit starker Seilspannung sichern. In Bodenferne ab einem Viertel der Route weder Schlappseil noch Seilspannung.",
               "media": [],
               "errors": [
-                {"id":"v4-4-f1","severity":"AF","description":"EINMALIG Schlappseil bis 1/4 der Route (BN)","repeat":true},
-                {"id":"v4-4-f2","severity":"BF","description":"EINMALIG Keine Seilspannung bis 1/4 der Route (BN)","repeat":true},
-                {"id":"v4-4-f3","severity":"CF","description":"EINMALIG Schlappseil ab 1/4 der Route (BF)","repeat":true},
-                {"id":"v4-4-f4","severity":"CF","description":"EINMALIGStraffes Seil ab 1/4 der Route","repeat":true}
+                {"id":"v4-4-f1","severity":"AF","description":"Einmalig Schlappseil bis zu einem Viertel der Route (Bodennähe)","repeat":true},
+                {"id":"v4-4-f2","severity":"BF","description":"Einmalig keine Seilspannung bis zu einem Viertel der Route (Bodennähe)","repeat":true},
+                {"id":"v4-4-f3","severity":"CF","description":"Einmalig Schlappseil ab einem Viertel der Route (Bodenferne)","repeat":true},
+                {"id":"v4-4-f4","severity":"CF","description":"Einmalig straffes Seil ab einem Viertel der Route","repeat":true}
               ]
             }
           ]
@@ -533,7 +526,7 @@ window.examCatalog = {
         {
           "id": "v4-k3",
           "label": "Sicherungsgerät",
-          "source": "SiGe",
+          "source": "Sicherungsgerät",
           "color": 2,
           "competencies": [
             {
@@ -543,13 +536,13 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "BS stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil",
+              "ideal": "Bremsseil stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil",
               "media": [],
               "errors": [
-                {"id":"v4-5-f1","severity":"AF","description":"BS wird HÄUFIG losgelassen","repeat":false},
-                {"id":"v4-5-f2","severity":"BF","description":"BS wird EINMALIG kurz losgelassen","repeat":true,"escalatesTo":"v4-5-f1"},
-                {"id":"v4-5-f3","severity":"BF","description":"BS HÄUFIG locker am Bremsseil","repeat":false},
-                {"id":"v4-5-f4","severity":"CF","description":"BS EINMALIG locker am Bremsseil","repeat":true,"escalatesTo":"v4-5-f3"}
+                {"id":"v4-5-f1","severity":"AF","description":"Bremsseil häufig losgelassen","repeat":false},
+                {"id":"v4-5-f2","severity":"BF","description":"Bremsseil einmalig kurz losgelassen","repeat":true,"escalatesTo":"v4-5-f1"},
+                {"id":"v4-5-f3","severity":"BF","description":"Bremshand häufig locker am Bremsseil","repeat":false},
+                {"id":"v4-5-f4","severity":"CF","description":"Bremshand einmalig locker am Bremsseil","repeat":true,"escalatesTo":"v4-5-f3"}
               ]
             },
             {
@@ -559,11 +552,11 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "BH ist nur kurz beim Seileinholen über der Gerätelinie",
+              "ideal": "Bremshand ist nur kurz beim Seileinholen über der Gerätelinie",
               "media": [],
               "errors": [
-                {"id":"v4-6-f1","severity":"BF","description":"BH verharrt sehr oft und lang oberhalb Gerätelinie","repeat":false},
-                {"id":"v4-6-f2","severity":"CF","description":"BH verharrt manchmal kurz oberhalb Gerätelinie","repeat":false}
+                {"id":"v4-6-f1","severity":"BF","description":"Bremshand verharrt sehr oft und lange oberhalb der Gerätelinie","repeat":false},
+                {"id":"v4-6-f2","severity":"CF","description":"Bremshand verharrt manchmal kurz oberhalb der Gerätelinie","repeat":true,"escalatesTo":"v4-6-f1"}
               ]
             },
             {
@@ -573,11 +566,11 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Saubere Einholbewegeung, zügig, passende Menge, um Tunneln zu ermöglichen",
+              "ideal": "Saubere, zügige Einholbewegung mit passender Seilmenge, um das Tunneln zu ermöglichen",
               "media": [],
               "errors": [
-                {"id":"v4-7-f1","severity":"BF","description":"HÄUFIG unsaubere / hektische Einholbewegung / mit zu großen Bremsseil Schlaufen, welche Tunneln erschweren","repeat":false},
-                {"id":"v4-7-f2","severity":"CF","description":"EINMALIG unsaubere / hektische Einholbewegung / mit zu großen Bremsseil Schlaufen, welche Tunneln erschweren","repeat":true,"escalatesTo":"v4-7-f1"}
+                {"id":"v4-7-f1","severity":"BF","description":"Häufig unsaubere oder hektische Einholbewegung oder zu große Bremsseilschlaufen, die das Tunneln erschweren","repeat":false},
+                {"id":"v4-7-f2","severity":"CF","description":"Einmalig unsaubere oder hektische Einholbewegung oder zu große Bremsseilschlaufen, die das Tunneln erschweren","repeat":true,"escalatesTo":"v4-7-f1"}
               ]
             },
             {
@@ -587,11 +580,11 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "BS tunnelt sauber, Faust öffnet sich kaum",
+              "ideal": "Bremshand tunnelt sauber, die Faust öffnet sich kaum",
               "media": [],
               "errors": [
-                {"id":"v4-8-f1","severity":"BF","description":"BH tunnelt HÄUFIG nicht, lässt das BS los","repeat":false},
-                {"id":"v4-8-f2","severity":"CF","description":"BH tunnelt EINMALIG sehr unsauber","repeat":true}
+                {"id":"v4-8-f1","severity":"BF","description":"Bremshand tunnelt häufig nicht und lässt das Bremsseil los","repeat":false},
+                {"id":"v4-8-f2","severity":"CF","description":"Bremshand tunnelt einmalig sehr unsauber","repeat":true,"escalatesTo":"v4-8-f1"}
               ]
             },
             {
@@ -601,11 +594,11 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Kein unnötiger Kontakt mit SiG / Mechanik",
+              "ideal": "Kein unnötiger Kontakt mit dem Sicherungsgerät oder seiner Mechanik",
               "media": [],
               "errors": [
-                {"id":"v4-9-f1","severity":"BF","description":"Unnötig viel Kontakt mit / Gerätumschließen vom SiGe","repeat":false},
-                {"id":"v4-9-f2","severity":"CF","description":"Manchmal Kontakt mit / Gerätumschließen vom SiGe","repeat":false}
+                {"id":"v4-9-f1","severity":"BF","description":"Unnötig viel Kontakt mit dem Sicherungsgerät oder Umschließen des Geräts","repeat":false},
+                {"id":"v4-9-f2","severity":"CF","description":"Gelegentlicher Kontakt mit dem Sicherungsgerät oder gelegentliches Umschließen des Geräts","repeat":true,"escalatesTo":"v4-9-f1"}
               ]
             }
           ]
@@ -632,10 +625,10 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Körper immer VOR Sicherungsseil",
+              "ideal": "Körper immer vor dem Sicherungsseil",
               "media": [],
               "errors": [
-                {"id":"v5-1-f1","severity":"CF","description":"Körper längere Zeit / ungemerkt HINTER Sicherungsseil","repeat":false}
+                {"id":"v5-1-f1","severity":"CF","description":"Körper längere Zeit oder unbemerkt hinter dem Sicherungsseil","repeat":false}
               ]
             }
           ]
@@ -653,10 +646,10 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Kommandos korrekt & mit Namen genutzt mit angemessener Lautstärke",
+              "ideal": "Kommandos korrekt, mit Namen und in angemessener Lautstärke gegeben",
               "media": [],
               "errors": [
-                {"id":"v5-2-f1","severity":"CF","description":"Falsche Kommandos / ohne Namen / zu leise / laut, Kommando \"AB\" zu früh","repeat":false}
+                {"id":"v5-2-f1","severity":"CF","description":"Falsche Kommandos, fehlende Namen, zu leise oder zu laute Kommandos oder Kommando „AB“ zu früh gegeben","repeat":false}
               ]
             }
           ]
@@ -674,7 +667,7 @@ window.examCatalog = {
               "modes": [
                 "toprope"
               ],
-              "ideal": "Unter der Umlenkung Route beendet",
+              "ideal": "Route unterhalb der Umlenkung beendet",
               "media": [],
               "errors": [
                 {"id":"v5-3-f1","severity":"CF","description":"Umlenkung überklettert","repeat":false}
@@ -704,10 +697,10 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Richtiges Spotten: mit Spannung, geschlossene Finger, Bereitschaftshaltung, Gewicht passend / NICHT Spotten!",
+              "ideal": "Beim Spotten Körperspannung, geschlossene Finger, Bereitschaftshaltung und passendes Gewicht beachten oder auf das Spotten verzichten",
               "media": [],
               "errors": [
-                {"id":"v6-1-f1","severity":"CF","description":"Falsches Spotten: ohne Spannung, Finger offen und locker, zu weit hinter dem Körper, K zu schwer...","repeat":false}
+                {"id":"v6-1-f1","severity":"CF","description":"Fehler beim Spotten, zum Beispiel fehlende Spannung, offene und lockere Finger, zu großer Abstand hinter dem Körper oder zu hohes Gewicht der kletternden Person","repeat":false}
               ]
             }
           ]
@@ -721,48 +714,48 @@ window.examCatalog = {
             {
               "id": "v6-2",
               "number": 2,
-              "label": "Seilmenge 1. ZWS",
+              "label": "Seilmenge an der ersten Zwischensicherung",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Seilmenge für 1. Clip gut passend",
+              "ideal": "Seilmenge beim ersten Clip passend",
               "media": [],
               "errors": [
-                {"id":"v6-2-f1","severity":"CF","description":"Seilmenge für 1. Clip viel zu wenig / zu viel","repeat":false}
+                {"id":"v6-2-f1","severity":"CF","description":"Beim ersten Clip viel zu wenig oder viel zu viel Seil","repeat":false}
               ]
             },
             {
               "id": "v6-3",
               "number": 3,
-              "label": "Seilmenge in BN",
+              "label": "Seilmenge in Bodennähe",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Stets die richtige Seilmenge, Seil verläuft gerade nach oben, ohne Durchhang. Zu viel Schlappseil wird gleich bemerkt und korrigiert  (etwas Sensorseil i.O auf Höhe der ZWS)",
+              "ideal": "Passende Seilmenge, Seilverlauf gerade nach oben ohne Durchhang. Zu viel Schlappseil wird direkt bemerkt und korrigiert (etwas Sensorseil auf Höhe der Zwischensicherung ist in Ordnung).",
               "media": [],
               "errors": [
-                {"id":"v6-3-f1","severity":"AF","description":"LÄNGERE ZEIT (2 - 3 sec) ZU VIEL unkonktrolliertes / unbemerktes Schlappseil in BN bis zur 6. Exe","repeat":false},
-                {"id":"v6-3-f2","severity":"BF","description":"HÄUFIGER ETWAS unkonktrolliertes / unbemerktes Schlappseil in BN bis zur 6. Ex","repeat":false},
-                {"id":"v6-3-f3","severity":"CF","description":"EINMALIG ETWAS unkonktrolliertes / unbemerktes Schlappseil in BN bis zur 6. Exe","repeat":true,"escalatesTo":"v6-3-f2"},
-                {"id":"v6-3-f4","severity":"CF","description":"EINMALIG ETWAS zu viel Seil für Clippen gegeben, welches wieder eingeholt werden muss.","repeat":true}
+                {"id":"v6-3-f1","severity":"AF","description":"Längere Zeit (2–3 s) zu viel unkontrolliertes oder unbemerktes Schlappseil in Bodennähe bis zur sechsten Expressschlinge","repeat":false,"excludes":["v6-3-f2","v6-3-f3","v6-3-f4"]},
+                {"id":"v6-3-f2","severity":"BF","description":"Häufiger etwas unkontrolliertes oder unbemerktes Schlappseil in Bodennähe bis zur sechsten Expressschlinge","repeat":false},
+                {"id":"v6-3-f3","severity":"CF","description":"Einmalig etwas unkontrolliertes oder unbemerktes Schlappseil in Bodennähe bis zur sechsten Expressschlinge","repeat":true,"escalatesTo":"v6-3-f2"},
+                {"id":"v6-3-f4","severity":"CF","description":"Einmalig etwas zu viel Seil zum Clippen ausgegeben und anschließend wieder einholen müssen","repeat":true}
               ]
             },
             {
               "id": "v6-4",
               "number": 4,
-              "label": "Seilmenge in BF",
+              "label": "Seilmenge in Bodenferne",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Stets die richtige Seilmenge, leichter Durchhang (ca. 20 - 30 cm Seil im System). Zu viel / wenig Schlappseil wird gleich bemerkt und korrigiert  (etwas Sensorseil i.O auf Höhe der ZWS)",
+              "ideal": "Passende Seilmenge mit leichtem Durchhang (etwa 20–30 cm Seil im System). Zu viel oder zu wenig Schlappseil wird direkt bemerkt und korrigiert (etwas Sensorseil auf Höhe der Zwischensicherung ist in Ordnung).",
               "media": [],
               "errors": [
-                {"id":"v6-4-f1","severity":"AF","description":"LÄNGERE ZEIT (2 - 3 sec) SEHR VIEL unkonktrolliertes / unbemerktes Schlappseil in BF ab 6. Exe","repeat":false},
-                {"id":"v6-4-f2","severity":"BF","description":"HÄUFIGER ZU VIEL unkonktrolliertes / unbemerktes Schlappseil in BF ab 6. Exe","repeat":false},
-                {"id":"v6-4-f3","severity":"BF","description":"HÄUFIGER ZU WENIG Seil / Shortropen in BF ab 6. Exe, Harte Stürze sind zu erwarten","repeat":false},
-                {"id":"v6-4-f4","severity":"CF","description":"EINMALIG ETWAS unkonktrolliertes / unbemerktes Schlappseil in BF ab 6. Exe","repeat":true,"escalatesTo":"v6-4-f2"},
-                {"id":"v6-4-f5","severity":"CF","description":"EINMALIG ETWAS zu viel Seil für Clippen gegeben, welches wieder eingeholt werden muss.","repeat":true},
-                {"id":"v6-4-f6","severity":"CF","description":"EINMALIG ZU WENIG Seil / Shortropen in BF ab 6. Exe, Harte Stürze sind zu erwarten","repeat":true,"escalatesTo":"v6-4-f3"}
+                {"id":"v6-4-f1","severity":"AF","description":"Längere Zeit (2–3 s) sehr viel unkontrolliertes oder unbemerktes Schlappseil in Bodenferne ab der sechsten Expressschlinge","repeat":false},
+                {"id":"v6-4-f2","severity":"BF","description":"Häufiger zu viel unkontrolliertes oder unbemerktes Schlappseil in Bodenferne ab der sechsten Expressschlinge","repeat":false},
+                {"id":"v6-4-f3","severity":"BF","description":"Häufiger zu wenig Seil (Shortropen) in Bodenferne ab der sechsten Expressschlinge. Harte Stürze sind zu erwarten.","repeat":false},
+                {"id":"v6-4-f4","severity":"CF","description":"Einmalig etwas unkontrolliertes oder unbemerktes Schlappseil in Bodenferne ab der sechsten Expressschlinge","repeat":true,"escalatesTo":"v6-4-f2"},
+                {"id":"v6-4-f5","severity":"CF","description":"Einmalig etwas zu viel Seil zum Clippen ausgegeben und anschließend wieder einholen müssen","repeat":true},
+                {"id":"v6-4-f6","severity":"CF","description":"Einmalig zu wenig Seil (Shortropen) in Bodenferne ab der sechsten Expressschlinge. Harte Stürze sind zu erwarten.","repeat":true,"escalatesTo":"v6-4-f3"}
               ]
             }
           ]
@@ -776,44 +769,44 @@ window.examCatalog = {
             {
               "id": "v6-5",
               "number": 5,
-              "label": "Positionierung 1. ZWS",
+              "label": "Positionierung an der ersten Zwischensicherung",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Positionierung S entgegen Kletterrichtung nach 1. Zwischensicherung ZWS korrekt, 1 m seitlich Routenlinie an der Wand",
+              "ideal": "Nach der ersten Zwischensicherung steht die sichernde Person entgegen der Kletterrichtung an der Wand, 1 m seitlich der Routenlinie",
               "media": [],
               "errors": [
-                {"id":"v6-5-f1","severity":"AF","description":"Positionierung zentral unter K","repeat":false},
-                {"id":"v6-5-f2","severity":"BF","description":"Positionierung S entgegen Kletterrichtung nach 1. Zwischensicherung ZWS falsche Seite","repeat":false}
+                {"id":"v6-5-f1","severity":"AF","description":"Position zentral unter der kletternden Person","repeat":false},
+                {"id":"v6-5-f2","severity":"BF","description":"Nach der ersten Zwischensicherung steht die sichernde Person in Bezug auf die Kletterrichtung auf der falschen Seite","repeat":false}
               ]
             },
             {
               "id": "v6-6",
               "number": 6,
-              "label": "Positionierung BN",
+              "label": "Positionierung in Bodennähe",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Positionierung in BN (bis zur 6. Exe) stets entgegengesetzt zum K (1m links / rechts d. Routenlinie)",
+              "ideal": "In Bodennähe bis zur sechsten Expressschlinge stets auf der gegenüberliegenden Seite der kletternden Person stehen (1 m links oder rechts der Routenlinie)",
               "media": [],
               "errors": [
-                {"id":"v6-6-f1","severity":"AF","description":"Positionierung zentral unter K bis zur 6. Exe","repeat":false},
-                {"id":"v6-6-f2","severity":"BF","description":"Positionierung HÄUFIG / IMMER auf der falschen Seite bis zur 6. Exe","repeat":false},
-                {"id":"v6-6-f3","severity":"CF","description":"Positionierung EINMALIG auf der falschen Seite bis zur 6. Exe","repeat":true,"escalatesTo":"v6-6-f2"}
+                {"id":"v6-6-f1","severity":"AF","description":"Bis zur sechsten Expressschlinge zentral unter der kletternden Person positioniert","repeat":false},
+                {"id":"v6-6-f2","severity":"BF","description":"Bis zur sechsten Expressschlinge häufig oder immer auf der falschen Seite positioniert","repeat":false},
+                {"id":"v6-6-f3","severity":"CF","description":"Bis zur sechsten Expressschlinge einmalig auf der falschen Seite positioniert","repeat":true,"escalatesTo":"v6-6-f2"}
               ]
             },
             {
               "id": "v6-7",
               "number": 7,
-              "label": "Positionierung BF",
+              "label": "Positionierung in Bodenferne",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Positionierung zentral unter der 1. ZWS ab der 6. Exe, ca. 1 m von der Wand",
+              "ideal": "Ab der sechsten Expressschlinge zentral unter der ersten Zwischensicherung stehen, etwa 1 m von der Wand entfernt",
               "media": [],
               "errors": [
-                {"id":"v6-7-f1","severity":"BF","description":"Positionierung HÄUFIG / IMMER seitlich der 1. ZWS ab der 6. Exe","repeat":false},
-                {"id":"v6-7-f2","severity":"CF","description":"Positionierung EINMALIG seitlich der 1. ZWS ab der 6. Exe","repeat":true,"escalatesTo":"v6-7-f1"}
+                {"id":"v6-7-f1","severity":"BF","description":"Ab der sechsten Expressschlinge häufig oder immer seitlich der ersten Zwischensicherung positioniert","repeat":false},
+                {"id":"v6-7-f2","severity":"CF","description":"Ab der sechsten Expressschlinge einmalig seitlich der ersten Zwischensicherung positioniert","repeat":true,"escalatesTo":"v6-7-f1"}
               ]
             },
             {
@@ -823,10 +816,10 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "S steht bereit mit einem Bein nach vorne und leicht angewinkelt",
+              "ideal": "Die sichernde Person steht bereit, ein Bein vorne und leicht angewinkelt",
               "media": [],
               "errors": [
-                {"id":"v6-8-f1","severity":"CF","description":"S steht passiv, mit durchgestreckten Beinen","repeat":false}
+                {"id":"v6-8-f1","severity":"CF","description":"Die sichernde Person steht passiv mit durchgestreckten Beinen","repeat":false}
               ]
             }
           ]
@@ -834,41 +827,41 @@ window.examCatalog = {
         {
           "id": "v6-k4",
           "label": "Sicherungsgerät",
-          "source": "SiGe",
+          "source": "Sicherungsgerät",
           "color": 3,
           "competencies": [
             {
               "id": "v6-9",
               "number": 9,
-              "label": "Seilausgeben Halbautomat",
+              "label": "Seilausgeben mit Halbautomat",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "So viel Tubemethode wie möglich, so wenig Gaswerk wie nötig. Saubere Durchführung",
+              "ideal": "So viel Tubemethode wie möglich, so wenig Gaswerkmethode wie nötig. Auf saubere Ausführung achten.",
               "media": [],
               "errors": [
-                {"id":"v6-9-f1","severity":"AF","description":"Grundsätzliche gefährliche Methode (\"Franzosenmethode\") wird angewandt","repeat":false},
-                {"id":"v6-9-f2","severity":"BF","description":"EINMALIG Seilausgeben mit \"geklemmten\" Gerät (falsche Gaswerkmethode)","repeat":true},
-                {"id":"v6-9-f3","severity":"BF","description":"HÄUFIG Parken in der Gaswerkmethode mit Daumen auf Gerät","repeat":false},
-                {"id":"v6-9-f4","severity":"CF","description":"EINMALIG Parken in der Gaswerkmethode mit Daumen auf Gerät","repeat":true,"escalatesTo":"v6-9-f3"}
+                {"id":"v6-9-f1","severity":"AF","description":"Grundsätzlich gefährliche Methode angewandt („Franzosenmethode“)","repeat":false},
+                {"id":"v6-9-f2","severity":"BF","description":"Einmalig Seil mit „geklemmtem“ Gerät ausgegeben (falsche Gaswerkmethode)","repeat":true},
+                {"id":"v6-9-f3","severity":"BF","description":"Häufiges Verharren in der Gaswerkmethode mit dem Daumen auf dem Gerät","repeat":false},
+                {"id":"v6-9-f4","severity":"CF","description":"Einmaliges Verharren in der Gaswerkmethode mit dem Daumen auf dem Gerät","repeat":true,"escalatesTo":"v6-9-f3"}
               ]
             },
             {
               "id": "v6-10",
               "number": 10,
-              "label": "Seilausgeben Autotube",
+              "label": "Seilausgeben mit Autotube",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Seilausgeben mit sauberer Hebel (Rüssel-) bedienung. Hand \"hebt\" statt \"kippt\" Hebel nur kurz zum Seilausgeben öffnen, Bremshand maximal geschlossen.",
+              "ideal": "Hebel (Rüssel) beim Seilausgeben sauber bedienen: mit der Hand heben statt kippen, nur kurz zum Seilausgeben öffnen und die Bremshand möglichst geschlossen halten.",
               "media": [],
               "errors": [
-                {"id":"v6-10-f1","severity":"AF","description":"Hebel bleibt HÄUFIG unnötig lang offen","repeat":false},
-                {"id":"v6-10-f2","severity":"AF","description":"Beim öffnen des Hebels ist die BH HÄUFIG offen","repeat":false},
-                {"id":"v6-10-f3","severity":"BF","description":"Beim öffnen des Hebels ist die BH EINMALIG offen","repeat":true,"escalatesTo":"v6-10-f2"},
-                {"id":"v6-10-f4","severity":"BF","description":"Hand \"kippt\" HÄUFIG den Hebel","repeat":false},
-                {"id":"v6-10-f5","severity":"CF","description":"Hebel bleibt EINMALIG unnötig lang offen","repeat":true,"escalatesTo":"v6-10-f1"},
-                {"id":"v6-10-f6","severity":"CF","description":"Hand \"kippt\" EINMALIG den Hebel","repeat":true,"escalatesTo":"v6-10-f4"}
+                {"id":"v6-10-f1","severity":"AF","description":"Hebel bleibt häufig unnötig lange offen","repeat":false},
+                {"id":"v6-10-f2","severity":"AF","description":"Beim Öffnen des Hebels ist die Bremshand häufig offen","repeat":false},
+                {"id":"v6-10-f3","severity":"BF","description":"Beim Öffnen des Hebels ist die Bremshand einmalig offen","repeat":true,"escalatesTo":"v6-10-f2"},
+                {"id":"v6-10-f4","severity":"BF","description":"Hand kippt den Hebel häufig","repeat":false},
+                {"id":"v6-10-f5","severity":"CF","description":"Hebel bleibt einmalig unnötig lange offen","repeat":true,"escalatesTo":"v6-10-f1"},
+                {"id":"v6-10-f6","severity":"CF","description":"Hand kippt den Hebel einmalig","repeat":true,"escalatesTo":"v6-10-f4"}
               ]
             },
             {
@@ -878,11 +871,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Saubere Einholbewegeung, zügig, passende Menge, um Tunneln zu ermöglichen",
+              "ideal": "Saubere, zügige Einholbewegung mit passender Seilmenge, um das Tunneln zu ermöglichen",
               "media": [],
               "errors": [
-                {"id":"v6-11-f1","severity":"BF","description":"HÄUFIG unsaubere / hektische Einholbewegung / mit zu großen Bremsseil Schlaufen, welche Tunneln erschweren","repeat":false},
-                {"id":"v6-11-f2","severity":"CF","description":"EINMALIG unsaubere / hektische Einholbewegung / mit zu großen Bremsseil Schlaufen, welche Tunneln erschweren","repeat":true,"escalatesTo":"v6-11-f1"}
+                {"id":"v6-11-f1","severity":"BF","description":"Häufig unsaubere oder hektische Einholbewegung oder zu große Bremsseilschlaufen, die das Tunneln erschweren","repeat":false},
+                {"id":"v6-11-f2","severity":"CF","description":"Einmalig unsaubere oder hektische Einholbewegung oder zu große Bremsseilschlaufen, die das Tunneln erschweren","repeat":true,"escalatesTo":"v6-11-f1"}
               ]
             },
             {
@@ -892,11 +885,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "BS tunnelt sauber, Faust öffnet sich kaum",
+              "ideal": "Bremshand tunnelt sauber, die Faust öffnet sich kaum",
               "media": [],
               "errors": [
-                {"id":"v6-12-f1","severity":"BF","description":"BH tunnelt HÄUFIG nicht, lässt das BS los","repeat":false},
-                {"id":"v6-12-f2","severity":"CF","description":"BH tunnelt EINMALIG sehr unsauber","repeat":true}
+                {"id":"v6-12-f1","severity":"BF","description":"Bremshand tunnelt häufig nicht und lässt das Bremsseil los","repeat":false},
+                {"id":"v6-12-f2","severity":"CF","description":"Bremshand tunnelt einmalig sehr unsauber","repeat":true,"escalatesTo":"v6-12-f1"}
               ]
             },
             {
@@ -906,13 +899,13 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "BS stets in geschlossener Faust mit Wächterdaumen, wenn möglich mit leichtem Druck am Seil",
+              "ideal": "Bremsseil stets in geschlossener Faust mit Wächterdaumen, wenn möglich mit leichtem Druck am Seil",
               "media": [],
               "errors": [
-                {"id":"v6-13-f1","severity":"AF","description":"BS wird HÄUFIG losgelassen","repeat":false,"ideal":"BS stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil"},
-                {"id":"v6-13-f2","severity":"BF","description":"BS wird EINMALIG kurz losgelassen","repeat":true,"escalatesTo":"v6-13-f1","ideal":"BS stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil"},
-                {"id":"v6-13-f3","severity":"BF","description":"BS HÄUFIG locker am Bremsseil","repeat":false,"ideal":"BS stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil"},
-                {"id":"v6-13-f4","severity":"CF","description":"BS EINMALIG locker am Bremsseil","repeat":true,"escalatesTo":"v6-13-f3","ideal":"BS stets in geschlossener Faust mit Daumen, wenn möglich mit leichtem Druck am Seil"}
+                {"id":"v6-13-f1","severity":"AF","description":"Bremsseil häufig losgelassen","repeat":false},
+                {"id":"v6-13-f2","severity":"BF","description":"Bremsseil einmalig kurz losgelassen","repeat":true,"escalatesTo":"v6-13-f1"},
+                {"id":"v6-13-f3","severity":"BF","description":"Bremshand häufig locker am Bremsseil","repeat":false},
+                {"id":"v6-13-f4","severity":"CF","description":"Bremshand einmalig locker am Bremsseil","repeat":true,"escalatesTo":"v6-13-f3"}
               ]
             },
             {
@@ -922,11 +915,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "BH führt das Bremsseil nicht über die Gerätelinie, keine \"Gießkanne\"",
+              "ideal": "Bremshand führt das Bremsseil nicht über die Gerätelinie (keine „Gießkanne“)",
               "media": [],
               "errors": [
-                {"id":"v6-14-f1","severity":"BF","description":"BH verharrt HÄUFIG oberhalb Gerätelinie","repeat":false},
-                {"id":"v6-14-f2","severity":"CF","description":"BH verharrt EINMALIG kurz oberhalb Gerätelinie","repeat":true,"escalatesTo":"v6-14-f1"}
+                {"id":"v6-14-f1","severity":"BF","description":"Bremshand verharrt häufig oberhalb der Gerätelinie","repeat":false},
+                {"id":"v6-14-f2","severity":"CF","description":"Bremshand verharrt einmalig kurz oberhalb der Gerätelinie","repeat":true,"escalatesTo":"v6-14-f1"}
               ]
             },
             {
@@ -936,11 +929,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Das notwendige Seil wird stets zügig / ohne Shortropen ausgegeben",
+              "ideal": "Benötigtes Seil stets zügig ausgeben, ohne zu shortropen",
               "media": [],
               "errors": [
-                {"id":"v6-15-f1","severity":"BF","description":"HÄUFIG Shortropen / zu wenig Seil zum Weiterklettern / Clippen gegeben","repeat":false},
-                {"id":"v6-15-f2","severity":"CF","description":"EINMALIG Shortropen / zu wenig Seil zum Weiterklettern / Clippen gegeben","repeat":true,"escalatesTo":"v6-15-f1"}
+                {"id":"v6-15-f1","severity":"BF","description":"Häufig zu wenig Seil zum Weiterklettern oder Clippen ausgegeben (Shortropen)","repeat":false},
+                {"id":"v6-15-f2","severity":"CF","description":"Einmalig zu wenig Seil zum Weiterklettern oder Clippen ausgegeben (Shortropen)","repeat":true,"escalatesTo":"v6-15-f1"}
               ]
             }
           ]
@@ -958,11 +951,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "S stets Aufmerksam und K beobachtend",
+              "ideal": "Die sichernde Person bleibt aufmerksam und beobachtet die kletternde Person",
               "media": [],
               "errors": [
-                {"id":"v6-16-f1","severity":"BF","description":"S sehr abgelenkt / schaut kaum nach oben","repeat":false},
-                {"id":"v6-16-f2","severity":"CF","description":"S KURZ abgelenkt / schaut in der Gegend rum","repeat":false}
+                {"id":"v6-16-f1","severity":"BF","description":"Die sichernde Person ist sehr abgelenkt und schaut kaum nach oben","repeat":false,"exclusiveGroup":"g1"},
+                {"id":"v6-16-f2","severity":"CF","description":"Die sichernde Person ist kurz abgelenkt und schaut sich um","repeat":false,"exclusiveGroup":"g1"}
               ]
             },
             {
@@ -972,10 +965,10 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "S beobachtet K und gibt Rückmeldung / Erinnerung zum Clippen / Fuß hinter Seil",
+              "ideal": "Die sichernde Person beobachtet die kletternde Person und gibt Rückmeldung zum Clippen oder zur Fußposition hinter dem Seil",
               "media": [],
               "errors": [
-                {"id":"v6-17-f1","severity":"CF","description":"S gibt keine Rückmeldung zum Clippen / Fuß hinter Seil des K","repeat":false}
+                {"id":"v6-17-f1","severity":"CF","description":"Die sichernde Person gibt keine Rückmeldung zum Clippen oder zur Fußposition der kletternden Person hinter dem Seil","repeat":false}
               ]
             }
           ]
@@ -998,15 +991,15 @@ window.examCatalog = {
             {
               "id": "v7-1",
               "number": 1,
-              "label": "Clip 1. ZWS",
+              "label": "Clippen der ersten Zwischensicherung",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "1. ZWS so früh wie möglich clippen, BA Karabiner richtig rum (Weg von der Wand), an richtige Stelle, BA unverdreht",
+              "ideal": "Erste Zwischensicherung so früh wie möglich clippen. Karabiner des Bremsassistenten an der richtigen Stelle und von der Wand weg ausrichten. Der Bremsassistent ist unverdreht.",
               "media": [],
               "errors": [
-                {"id":"v7-1-f1","severity":"CF","description":"1. ZWS zu spät geklippt","repeat":false},
-                {"id":"v7-1-f2","severity":"CF","description":"BA Karabiner zeigt zur Wand / BA verdreht / BA Karabiner an falsche Stelle: z.B Normalkarabiner Schlinge","repeat":false}
+                {"id":"v7-1-f1","severity":"CF","description":"Erste Zwischensicherung zu spät geclippt","repeat":false},
+                {"id":"v7-1-f2","severity":"CF","description":"Karabiner des Bremsassistenten zeigt zur Wand, Bremsassistent ist verdreht oder Karabiner des Bremsassistenten an der falschen Stelle eingehängt (Beispiel im Sheet: „Normalkarabiner Schlinge“)","repeat":false}
               ]
             },
             {
@@ -1016,12 +1009,12 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand",
+              "ideal": "Stets stabile Clipposition mit drei Punkten, Hauptbein unter der Haltehand",
               "media": [],
               "errors": [
-                {"id":"v7-2-f1","severity":"BF","description":"EINMALIG sehr unstabile Clipposition, Sturz sehr wahrscheinlich, z.B offene Pendeltür","repeat":true},
-                {"id":"v7-2-f2","severity":"BF","description":"HÄUFIG etwas unstabile Position beim Clippen","repeat":false},
-                {"id":"v7-2-f3","severity":"CF","description":"EINMALIG etwas unstabile Position beim Clippen","repeat":true,"escalatesTo":"v7-2-f2"}
+                {"id":"v7-2-f1","severity":"BF","description":"Einmalig sehr instabile Clipposition, Sturz sehr wahrscheinlich, zum Beispiel bei offener Pendeltür","repeat":true},
+                {"id":"v7-2-f2","severity":"BF","description":"Häufig etwas instabile Position beim Clippen","repeat":false},
+                {"id":"v7-2-f3","severity":"CF","description":"Einmalig etwas instabile Position beim Clippen","repeat":true,"escalatesTo":"v7-2-f2"}
               ]
             },
             {
@@ -1031,30 +1024,30 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Stets im passenden Clipfenster zwischen Bauchnabel & Brustbein geclippt",
+              "ideal": "Stets im passenden Clipfenster zwischen Bauchnabel und Brustbein geclippt",
               "media": [],
               "errors": [
-                {"id":"v7-3-f1","severity":"AF","description":"HÄUFIG stark überstrecktes Clippen (oberhalb vom Kopf) in BN","repeat":false,"ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f2","severity":"AF","description":"Überklettern einer ZWS (sobald Hüfte über Exe)","repeat":false,"ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f3","severity":"BF","description":"EINMALIG stark überstrecktes Clippen (oberhalb vom Kopf) in BN","repeat":true,"escalatesTo":"v7-3-f1","ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f4","severity":"BF","description":"HÄUFIG stark überstrecktes Clippen (oberhalb vom Kopf) in BF","repeat":false,"ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f5","severity":"BF","description":"HÄUFIG zu spätes Clippen / überklettern der ZWS (unterhalb Bauchnabel) in BF","repeat":false,"ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f6","severity":"CF","description":"EINMALIG stark überstrecktes Clippen (oberhalb vom Kopf) in BF","repeat":true,"escalatesTo":"v7-3-f4","ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"},
-                {"id":"v7-3-f7","severity":"CF","description":"EINMALIG zu spätes Clippen / überklettern der ZWS (unterhalb Bauchnabel) in BF","repeat":true,"escalatesTo":"v7-3-f5","ideal":"Stets stabile Clipposition mit 3 Punkten, Hauptbein unter der Haltehand"}
+                {"id":"v7-3-f1","severity":"AF","description":"Häufig stark überstrecktes Clippen oberhalb des Kopfes in Bodennähe","repeat":false},
+                {"id":"v7-3-f2","severity":"AF","description":"Zwischensicherung überklettert (Hüfte über der Expressschlinge)","repeat":false},
+                {"id":"v7-3-f3","severity":"BF","description":"Einmalig stark überstrecktes Clippen oberhalb des Kopfes in Bodennähe","repeat":true,"escalatesTo":"v7-3-f1"},
+                {"id":"v7-3-f4","severity":"BF","description":"Häufig stark überstrecktes Clippen oberhalb des Kopfes in Bodenferne","repeat":false},
+                {"id":"v7-3-f5","severity":"BF","description":"Häufig zu spätes Clippen oder Überklettern der Zwischensicherung in Bodenferne (unterhalb des Bauchnabels)","repeat":false},
+                {"id":"v7-3-f6","severity":"CF","description":"Einmalig stark überstrecktes Clippen oberhalb des Kopfes in Bodenferne","repeat":true,"escalatesTo":"v7-3-f4"},
+                {"id":"v7-3-f7","severity":"CF","description":"Einmalig zu spätes Clippen oder Überklettern der Zwischensicherung in Bodenferne (unterhalb des Bauchnabels)","repeat":true,"escalatesTo":"v7-3-f5"}
               ]
             },
             {
               "id": "v7-4",
               "number": 4,
-              "label": "Clipprichtung",
+              "label": "Cliprichtung",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Stets Seil richtig in ZWS gehängt, \"von der Wand ins Land\"",
+              "ideal": "Seil stets richtig in die Zwischensicherung eingehängt („von der Wand ins Land“)",
               "media": [],
               "errors": [
-                {"id":"v7-4-f1","severity":"BF","description":"HÄUFIG Seil verkehrt in ZWS gehängt","repeat":false},
-                {"id":"v7-4-f2","severity":"CF","description":"EINMALIG Seil verkehrt in ZWS gehängt","repeat":true,"escalatesTo":"v7-4-f1"}
+                {"id":"v7-4-f1","severity":"BF","description":"Seil häufig verkehrt in die Zwischensicherung eingehängt","repeat":false},
+                {"id":"v7-4-f2","severity":"CF","description":"Seil einmalig verkehrt in die Zwischensicherung eingehängt","repeat":true,"escalatesTo":"v7-4-f1"}
               ]
             }
           ]
@@ -1068,14 +1061,14 @@ window.examCatalog = {
             {
               "id": "v7-5",
               "number": 5,
-              "label": "Fußposition 1. ZWS",
+              "label": "Fußposition an der ersten Zwischensicherung",
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Seil NEBEN den Beinen / Füßen",
+              "ideal": "Seil neben den Beinen oder Füßen",
               "media": [],
               "errors": [
-                {"id":"v7-5-f1","severity":"CF","description":"Seil ZWISCHEN den Beinen / Füßen","repeat":false}
+                {"id":"v7-5-f1","severity":"CF","description":"Seil zwischen den Beinen oder Füßen","repeat":false}
               ]
             },
             {
@@ -1085,11 +1078,11 @@ window.examCatalog = {
               "modes": [
                 "vorstieg"
               ],
-              "ideal": "Fuß / andere Körperteile NIE hinter Seil",
+              "ideal": "Fuß oder andere Körperteile nie hinter dem Seil",
               "media": [],
               "errors": [
-                {"id":"v7-6-f1","severity":"BF","description":"HÄUFIG Fuß / Körper hinterm Seil","repeat":false},
-                {"id":"v7-6-f2","severity":"CF","description":"EINMALIG Fuß / Körper hinterm Seil","repeat":true,"escalatesTo":"v7-6-f1"}
+                {"id":"v7-6-f1","severity":"BF","description":"Häufig mit dem Fuß oder Körper hinter dem Seil","repeat":false},
+                {"id":"v7-6-f2","severity":"CF","description":"Einmalig mit dem Fuß oder Körper hinter dem Seil","repeat":true,"escalatesTo":"v7-6-f1"}
               ]
             }
           ]
@@ -1118,10 +1111,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Kommando \"AB\" abgewartet",
+              "ideal": "Kommando „AB“ abgewartet",
               "media": [],
               "errors": [
-                {"id":"v8-1-f1","severity":"BF","description":"Zu früh abgelassen, Kommando \"AB\" kam noch nicht","repeat":false}
+                {"id":"v8-1-f1","severity":"BF","description":"Zu früh abgelassen, bevor das Kommando „AB“ kam","repeat":false}
               ]
             }
           ]
@@ -1140,10 +1133,10 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Richtiger Standort S (wenig Seilzug nach vorne)",
+              "ideal": "Standort der sichernden Person so gewählt, dass wenig Seilzug nach vorne entsteht",
               "media": [],
               "errors": [
-                {"id":"v8-2-f1","severity":"CF","description":"Standort S NICHT beachtet: zu weit weg von der Wand / Sicherungslinie","repeat":false}
+                {"id":"v8-2-f1","severity":"CF","description":"Standort der sichernden Person zu weit von der Wand oder der Sicherungslinie entfernt","repeat":false}
               ]
             }
           ]
@@ -1151,7 +1144,7 @@ window.examCatalog = {
         {
           "id": "v8-k3",
           "label": "Sicherungsgerät",
-          "source": "SiGe",
+          "source": "Sicherungsgerät",
           "color": 2,
           "competencies": [
             {
@@ -1162,7 +1155,7 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Kontrolliert, redundan, gleichmäßig mit korrekter Bedienung  SiGe abgelassen.",
+              "ideal": "Kontrolliert, redundant und gleichmäßig abgelassen und das Sicherungsgerät dabei korrekt bedient",
               "media": [],
               "errors": [
                 {"id":"v8-3-f1","severity":"AF","description":"Ablassen mit Sensorhand am Sensorseil ohne Redundanz","repeat":false},
@@ -1170,7 +1163,7 @@ window.examCatalog = {
                 {"id":"v8-3-f3","severity":"BF","description":"Zu schnelles Ablassen","repeat":false},
                 {"id":"v8-3-f4","severity":"CF","description":"Zu viel Kontakt zum Ablasshebel (Halbautomaten)","repeat":false},
                 {"id":"v8-3-f5","severity":"CF","description":"Ungleichmäßig abgelassen","repeat":false},
-                {"id":"v8-3-f6","severity":"CF","description":"K zu schnell / unsanft auf dem Boden abgesetzt","repeat":false}
+                {"id":"v8-3-f6","severity":"CF","description":"Die kletternde Person zu schnell oder unsanft auf dem Boden aufgesetzt","repeat":false}
               ]
             }
           ]
@@ -1189,11 +1182,11 @@ window.examCatalog = {
                 "toprope",
                 "vorstieg"
               ],
-              "ideal": "Redundanz mit 50 / 50 Blickwechsel K / SiGe beachtet. Auf andere Personen geachtet.",
+              "ideal": "Beim Ablassen den Blick gleichmäßig zwischen der kletternden Person und dem Sicherungsgerät wechseln und auf andere Personen achten",
               "media": [],
               "errors": [
-                {"id":"v8-4-f1","severity":"CF","description":"Redundanz mit 50 / 50 Blickwechsel K / SiGe MISSACHTET (z.B. ständiger Blick nach oben)","repeat":false},
-                {"id":"v8-4-f2","severity":"CF","description":"NICHT auf andere Menschen geachtet","repeat":false}
+                {"id":"v8-4-f1","severity":"CF","description":"50:50-Blickwechsel zwischen der kletternden Person und dem Sicherungsgerät versäumt (zum Beispiel ständig nach oben geschaut)","repeat":false},
+                {"id":"v8-4-f2","severity":"CF","description":"Nicht auf andere Personen geachtet","repeat":false}
               ]
             }
           ]

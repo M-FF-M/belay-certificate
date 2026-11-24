@@ -7,15 +7,6 @@ const storageKey = "kletterpruefung-v1";
 const nameLifetime = 7 * 24 * 60 * 60 * 1000;
 const dateFormat = new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" });
 const $ = (id) => document.getElementById(id);
-const categoryColors = [
-  ["#53708c", "#edf2f8"], ["#557b6a", "#eef5f0"], ["#786d88", "#f2eff7"],
-  ["#857154", "#f6f3ed"], ["#526f77", "#eaf3f4"], ["#876d78", "#f6eff2"],
-];
-const severityColors = {
-  CF: ["#94700f", "#fff8db", "#ffeaa0"],
-  BF: ["#a54e16", "#fff0e2", "#ffd4b1"],
-  AF: ["#ab353d", "#fce8e9", "#f9bfc2"],
-};
 
 let store = readStore();
 let activeId = store.currentId;
@@ -151,7 +142,7 @@ function forMode(mode) {
       ...category,
       competencies: category.competencies.filter((item) => item.modes.includes(mode)),
     })).filter((category) => category.competencies.length),
-  }));
+  })).filter((procedure) => procedure.categories.length);
 }
 
 function stateFor(exam, item) {
@@ -166,18 +157,38 @@ function replacedByFrequent(state, error) {
   return Boolean(error.escalatesTo && (state.counts[error.escalatesTo] || promoted(state, error)));
 }
 
+function clickLimit(error) {
+  return error.repeat ? catalog.repeatLimits[error.severity] : 1;
+}
+
 function effectiveCount(item, state, error) {
   const { counts } = state;
   if (replacedByFrequent(state, error)) return 0;
   if (item.errors.some((source) => source.escalatesTo === error.id && promoted(state, source))) return 1;
-  return counts[error.id] ?? 0;
+  return Math.min(counts[error.id] ?? 0, clickLimit(error));
+}
+
+function selectionBlock(item, state, error) {
+  if (replacedByFrequent(state, error)) return "durch häufig ersetzt";
+  const conflict = item.errors.find((other) =>
+    other.id !== error.id &&
+    ((error.exclusiveGroup && error.exclusiveGroup === other.exclusiveGroup) ||
+      error.excludes?.includes(other.id) || other.excludes?.includes(error.id)) &&
+    effectiveCount(item, state, other) > 0
+  );
+  if (conflict) return "andere Variante gewählt";
+  if (effectiveCount(item, state, error) >= clickLimit(error)) {
+    return error.repeat ? `Maximum ${clickLimit(error)}×` : "bereits gewählt";
+  }
+  return "";
 }
 
 function changeError(item, state, error, undo = false) {
   const { counts } = state;
   if (undo) {
     if (counts[error.id]) {
-      if (--counts[error.id] === 0) delete counts[error.id];
+      counts[error.id] = Math.min(counts[error.id], clickLimit(error)) - 1;
+      if (counts[error.id] === 0) delete counts[error.id];
     } else {
       const source = item.errors.find((candidate) =>
         candidate.escalatesTo === error.id && promoted(state, candidate)
@@ -186,13 +197,7 @@ function changeError(item, state, error, undo = false) {
     }
     return;
   }
-  if ((!error.repeat && effectiveCount(item, state, error)) ||
-      replacedByFrequent(state, error)) return;
-  if (error.exclusiveGroup) {
-    for (const sibling of item.errors) {
-      if (sibling.id !== error.id && sibling.exclusiveGroup === error.exclusiveGroup) delete counts[sibling.id];
-    }
-  }
+  if (selectionBlock(item, state, error)) return;
   counts[error.id] = (counts[error.id] ?? 0) + 1;
   state.perfect = false;
 }
@@ -222,24 +227,19 @@ function evaluate(exam) {
   }
   let status = "open";
   if (points >= catalog.thresholds.fail) status = "failed";
-  else if (rated === total) status = points >= catalog.thresholds.borderline ? "borderline" : "passed";
+  else if (total && rated === total) status = points >= catalog.thresholds.borderline ? "borderline" : "passed";
   return { points, rated, total, status, severityCounts, findings };
 }
 
 const abbreviations = {
   GU: "Gewichtsunterschied", VS: "Vorstieg", TR: "Toprope", BA: "Bremsassistent",
   BH: "Bremshand", S: "Sichernde Person", K: "Kletternde Person", ZWS: "Zwischensicherung",
-  BN: "Bodennähe", BF: "Bodenferne", BS: "Bremsseil", SiGe: "Sicherungsgerät",
+  BN: "Bodennähe", BF: "Bodenferne", BS: "Bremsseil", SiG: "Sicherungsgerät", SiGe: "Sicherungsgerät",
+  AK: "Anseilknoten",
 };
 
 function readable(text) {
-  return text.replace(/\b(GU|VS|TR|BA|BH|S|K|ZWS|BN|BF|BS|SiGe)\b/g, (word) => abbreviations[word]);
-}
-
-function setCategoryColor(node, category) {
-  const [accent, background] = categoryColors[category.color % categoryColors.length];
-  node.style.setProperty("--category", accent);
-  node.style.setProperty("--category-bg", background);
+  return text.replace(/(?<![\p{L}\p{N}_])(?:GU|VS|TR|BA|BH|S|K|ZWS|BN|BF|BS|SiGe?|AK)(?![\p{L}\p{N}_])/gu, (word) => abbreviations[word]);
 }
 
 function renderCompetency(item, categoryTitle) {
@@ -261,10 +261,7 @@ function renderCompetency(item, categoryTitle) {
     const tally = element("span", undefined, "error-meta");
     const undo = button("−", "undo");
     undo.setAttribute("aria-label", `Zurücknehmen: ${readable(error.description)}`);
-    const [color, background, selected] = severityColors[error.severity];
-    add.style.setProperty("--error", color);
-    add.style.setProperty("--error-bg", background);
-    add.style.setProperty("--selected", selected);
+    add.dataset.severity = error.severity;
     add.append(tally);
     row.append(add, undo);
     errors.append(row);
@@ -292,13 +289,14 @@ function renderCompetency(item, categoryTitle) {
     perfect.setAttribute("aria-pressed", state.perfect);
     for (const { error, severity, tally, add, undo } of controls) {
       const count = effectiveCount(item, state, error);
-      const blocked = replacedByFrequent(state, error);
+      const blocked = selectionBlock(item, state, error);
       const automatic = count && !state.counts[error.id];
-      add.disabled = Boolean(blocked || (!error.repeat && count));
+      add.disabled = Boolean(blocked);
       add.setAttribute("aria-pressed", count > 0);
       undo.hidden = count === 0;
       tally.textContent = `−${severity.points} · ${severity.label}` +
-        (count ? ` · ${count}×` : "") + (automatic ? " · hochgestuft" : blocked ? " · durch häufig ersetzt" : "");
+        (count ? ` · ${count}×` : "") + (automatic ? " · hochgestuft" : "") +
+        (blocked && blocked !== "bereits gewählt" ? ` · ${blocked}` : "");
     }
   }
 
@@ -346,9 +344,16 @@ function updateResult() {
   $("progress").value = rated;
   $("progress-label").textContent = `${rated} von ${total} Kompetenzen bewertet`;
   $("result").dataset.status = status;
-  $("result").textContent = `${points} Minuspunkte · ${status === "open" ? "Bewertung läuft" : statuses[status]}`;
+  const unit = points === 1 ? "Minuspunkt" : "Minuspunkte";
+  $("result").textContent = `${points} ${unit} · ${status === "open" ? "Bewertung läuft" : statuses[status]}`;
   $("review-missing").hidden = rated === total;
-  for (const [code, count] of Object.entries(severityCounts)) $("count-" + code).textContent = count;
+  const { borderline, fail } = catalog.thresholds;
+  $("threshold-note").textContent = `Unter ${borderline} Minuspunkten bestanden · ab ${borderline} Grenzfall · ab ${fail} nicht bestanden`;
+  for (const [code, count] of Object.entries(severityCounts)) {
+    const value = $("count-" + code);
+    value.previousElementSibling.textContent = catalog.severities[code].label;
+    value.textContent = count;
+  }
   const rows = findings.map(({ procedure, category, item, error, count, deduction }) => {
     const row = element("li");
     const description = element("div");
@@ -408,7 +413,7 @@ function categoryNav(procedure, categoryId) {
     for (const category of procedure.categories) {
       const link = element("a", category.label);
       link.href = `#${category.id}`;
-      setCategoryColor(link, category);
+      link.dataset.categoryColor = category.color % 6;
       categoryLinks.set(category.id, link);
     }
     $("categories").replaceChildren(...categoryLinks.values());
@@ -457,7 +462,7 @@ function renderChecklist() {
     for (const category of procedure.categories) {
       const group = element("section", undefined, "category");
       group.id = category.id;
-      setCategoryColor(group, category);
+      group.dataset.categoryColor = category.color % 6;
       const title = element("h3", category.label);
       if (category.competencies.length === 1) {
         const item = category.competencies[0];
@@ -481,7 +486,7 @@ function renderChecklist() {
 function showStart() {
   stopReview();
   $("start").hidden = false;
-  $("resume").hidden = !current();
+  $("resume").hidden = !current() || !forMode(current().mode).length;
   $("exam").hidden = true;
   $("navigation").hidden = true;
 }
@@ -494,6 +499,7 @@ function openExam(id, focus = false) {
   store.currentId = id;
   expireNames();
   view = forMode(exam.mode);
+  if (!view.length) return showStart();
   $("start").hidden = true;
   $("exam").hidden = false;
   $("navigation").hidden = false;
@@ -600,6 +606,7 @@ function cancelReviewOutsidePerfect(event) {
 document.addEventListener("click", cancelReviewOutsidePerfect, true);
 $("review-missing").addEventListener("click", reviewNext);
 document.querySelectorAll("[data-start]").forEach((control) => {
+  control.disabled = !forMode(control.dataset.start).length;
   control.addEventListener("click", () => makeExam(control.dataset.start));
 });
 $("new").addEventListener("click", () => {

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Katalogeditor · Kletterprüfung</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="editor.css">
+  <script src="catalog.js" defer></script>
+  <script src="editor.js" defer></script>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar-inner toolbar-row editor-toolbar">
+      <strong>Katalogeditor</strong>
+      <div class="view-switch" role="group" aria-label="Editoransicht">
+        <button type="button" id="show-sheet" aria-controls="sheet-panel" aria-pressed="true">Tabelle</button>
+        <button type="button" id="show-form" aria-controls="fields" aria-pressed="false">Formular</button>
+      </div>
+      <a href="index.html">Zum Prüfungsbogen</a>
+    </div>
+  </header>
+  <main class="editor">
+    <h1>Fragenkatalog bearbeiten</h1>
+    <section class="editor-panel" aria-label="Katalogdatei">
+      <div class="file-actions">
+        <button type="button" id="import-button">Datei importieren</button>
+        <input type="file" id="import-file" accept=".js,.json" hidden>
+        <button type="button" id="download">Als catalog.js exportieren</button>
+      </div>
+      <p id="save-status" role="status"></p>
+      <p id="message" role="alert" tabindex="-1" hidden></p>
+    </section>
+    <section id="sheet-panel" class="editor-panel" aria-labelledby="sheet-title">
+      <h2 id="sheet-title">Fehlerkatalog</h2>
+      <p id="sheet-help">Eine Zeile öffnet das Fehlerbild im Formular. Mit „…“ lässt sich der ganze Zelltext lesen.</p>
+      <div class="sheet-scroll" tabindex="0" role="region" aria-labelledby="sheet-title" aria-describedby="sheet-help">
+        <table class="catalog-sheet" aria-labelledby="sheet-title">
+          <colgroup><col><col><col><col><col><col></colgroup>
+          <thead><tr>
+            <th scope="col">Fehlerkategorie</th><th scope="col">Vorgang</th><th scope="col">Kategorie</th>
+            <th scope="col">Kompetenz</th><th scope="col">Beschreibung</th><th scope="col">Idealbild</th>
+          </tr></thead>
+          <tbody id="sheet-rows"></tbody>
+        </table>
+      </div>
+      <p id="sheet-empty" hidden>Der Katalog enthält noch keine Fehlerbilder.</p>
+    </section>
+    <section id="fields" class="editor-panel" aria-labelledby="fields-title" hidden>
+      <div class="panel-heading">
+        <h2 id="fields-title">Kompetenzen bearbeiten</h2>
+        <button type="button" id="show-source">Gesamtkatalog als JSON bearbeiten</button>
+      </div>
+      <div class="field-grid navigation-fields">
+        <label>Vorgang<select id="process-choice"></select></label>
+        <label>Kategorie<select id="category-choice"></select></label>
+        <label>Kompetenz<select id="item-choice"></select></label>
+      </div>
+      <label>Bezeichnung der Kompetenz<input id="item-label" type="text"></label>
+      <label>Idealbild<textarea id="item-ideal" rows="3"></textarea></label>
+      <div class="mode-options" role="group" aria-label="Prüfungsarten der Kompetenz">
+        <label class="check"><input id="mode-toprope" type="checkbox">Toprope</label>
+        <label class="check"><input id="mode-vorstieg" type="checkbox">Vorstieg</label>
+      </div>
+      <h3>Fehlerbilder</h3>
+      <div id="error-fields"></div>
+      <button type="button" id="add-error">Fehlerbild hinzufügen</button>
+      <div class="item-actions">
+        <button type="button" id="add-item">Kompetenz hinzufügen</button>
+        <button type="button" id="remove-item">Kompetenz entfernen</button>
+      </div>
+    </section>
+    <section id="source-panel" class="editor-panel" aria-labelledby="source-title" hidden>
+      <h2 id="source-title">Gesamtkatalog als JSON</h2>
+      <p>Hier lassen sich auch Vorgänge, Kategorien, Kompetenzen, Prüfungsarten, Medien und Bewertungsregeln ändern. Bestehende Protokolle verwenden die IDs des Katalogs.</p>
+      <label for="source-text">Katalogdaten</label>
+      <textarea id="source-text" rows="20" spellcheck="false" autocapitalize="off"></textarea>
+      <button type="button" id="apply-source">Prüfen und im Formular öffnen</button>
+    </section>
+  </main>
+  <noscript>Für den Katalogeditor wird JavaScript benötigt.</noscript>
+</body>
+</html>
